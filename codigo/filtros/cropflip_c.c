@@ -17,8 +17,6 @@ void cropflip_c    (
 	unsigned char (*dst_matrix)[dst_row_size] = (unsigned char (*)[dst_row_size]) dst;
 
 	// ejemplo de uso de src_matrix y dst_matrix (copia una parte de la imagen)
-<<<<<<< HEAD
-
 	for (int i = 0; i < tamy; i++) {
 		for (int j = 0; j < tamx; j++) {
 			bgra_t *p_d = (bgra_t*) &dst_matrix[i][j * 4];
@@ -33,35 +31,5 @@ void cropflip_c    (
 			
 		}
 	}
-
-
-//ahora tengo que dar vuelta la matriz destino
-/*	for (int i = 0; i < tamy; i++) {
-		for (int j = 0; j < tamx; j++) {
-			bgra_t *p_o = (bgra_t*) &dst_matrix[i][j * 4];
-			bgra_t *p_i = (bgra_t*) &src_matrix[tamy+offsety-i-1][offsetx+j];
-
-			p_d->b = p_i->b;
-			p_d->g = p_i->g;
-			p_d->r = p_i->r;
-			p_d->a = p_i->a;
-=======
-	int i=0;
-	for (i; i < tamy; i++) {
-		int j=0;
-		for (j; j < tamx; j++) {
-			bgra_t *p_d = (bgra_t*) &dst_matrix[i][(j) * 4];
-            bgra_t *p_s = (bgra_t*) &src_matrix[i][(j) * 4];
-
-			p_d->b = ((bgra_t*) &src_matrix[tamy+offsety-i-1][(offsetx+j) * 4])->b;
-			p_d->g = ((bgra_t*) &src_matrix[tamy+offsety-i-1][(offsetx+j) * 4])->g;
-			p_d->r = ((bgra_t*) &src_matrix[tamy+offsety-i-1][(offsetx+j) * 4])->r;
-			p_d->a = ((bgra_t*) &src_matrix[tamy+offsety-i-1][(offsetx+j) * 4])->a;
->>>>>>> fee6b7db04bbf33a3754ab78cb0ea23dc6895689
-
-			
-		}
-	}*/
-
 
 }
