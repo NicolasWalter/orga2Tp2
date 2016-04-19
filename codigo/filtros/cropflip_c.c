@@ -22,14 +22,32 @@ void cropflip_c    (
 		for (int j = 0; j < tamx; j++) {
 			bgra_t *p_d = (bgra_t*) &dst_matrix[i][j * 4];
             bgra_t *p_s = (bgra_t*) &src_matrix[i][j * 4];
-
-			p_d->b = p_s->b;
-			p_d->g = p_s->g;
-			p_d->r = p_s->r;
-			p_d->a = p_s->a;
-
+            bgra_t *p_i= (bgra_t*) &src_matrix[tamy+offsety-i-1][(offsetx+j)*4 ];
+		
+			p_d->b = p_i->b;
+			p_d->g = p_i->g;
+			p_d->r = p_i->r;
+			p_d->a = p_i->a;
+			 
+			
 		}
 	}
+
+
+//ahora tengo que dar vuelta la matriz destino
+/*	for (int i = 0; i < tamy; i++) {
+		for (int j = 0; j < tamx; j++) {
+			bgra_t *p_o = (bgra_t*) &dst_matrix[i][j * 4];
+			bgra_t *p_i = (bgra_t*) &src_matrix[tamy+offsety-i-1][offsetx+j];
+
+			p_d->b = p_i->b;
+			p_d->g = p_i->g;
+			p_d->r = p_i->r;
+			p_d->a = p_i->a;
+
+			
+		}
+	}*/
 
 
 }
