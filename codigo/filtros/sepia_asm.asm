@@ -19,7 +19,7 @@ shr rdx, 2 ; columnas * filas /4, para iterar
 	cmp r10, rdx
 	je .fin
 	pxor xmm7, xmm7 ; xmm7 = 0 | 0 | . . . | 0
-	mov xmm0, [rdi] ; donde arranca la matriz, despues incrementamos rdi de a 4 pxs
+	movups xmm0, [rdi] ; donde arranca la matriz, despues incrementamos rdi de a 4 pxs
 
 	movups xmm1, xmm0 ; ESTO MUEVE BIEN??
 
@@ -54,7 +54,7 @@ shr rdx, 2 ; columnas * filas /4, para iterar
 	ver que nada se pase de 255
 	meter el resul de la multi en el pixel
 	agarrar nuevos pixels.
-	
+	instrucciones float addps y  mulps, para multiplicar y sumar xmms, puede servirm ucho
 
 	; ;punpcklbw xmm2, xmm7 ; xmm2 = 0 | a15 | . . . | 0 | a8
 	
@@ -70,3 +70,5 @@ shr rdx, 2 ; columnas * filas /4, para iterar
 .fin:
 pop rbp
 ret
+
+
