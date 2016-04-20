@@ -19,33 +19,38 @@ shr rdx, 2 ; columnas * filas /4, para iterar
 	cmp r10, rdx
 	je .fin
 	pxor xmm7, xmm7 ; xmm7 = 0 | 0 | . . . | 0
-	movups xmm0, [rdi] ; donde arranca la matriz, despues incrementamos rdi de a 4 pxs
+	movups xmm0, [rdi] ; donde arranca la matriz, despues incrementamos rdi de a 4 pxs [ p4 | p3 | p2 | p1 ]
 
 	movups xmm1, xmm0 ; ESTO MUEVE BIEN??
 
-	punpcklbw xmm0, xmm7 ; xmm1 = 0 | a7 | . . . | 0 | a0
+	punpcklbw xmm0, xmm7 ; xmm0 = [ 0 | a1 | 0 | r1 | 0 | g1 | 0 | b1 | 0 | a2 | 0 | r2 | 0 | g2 | 0 | b2 ]
 
-	punpckhbw xmm1, xmm7  ;probar si funca o hay que usar wd
+	punpckhbw xmm1, xmm7  ;probar si funca o hay que usar wd [ 0 | a3 | 0 | r3 | 0 | g3 | 0 | b3 | 0 | a4 | 0 | r4 | 0 | g4 | 0 | b4 ]
 
-	movups xmm2, xmm0
+	movups xmm2, xmm0 ; xmm2 = xmm0 = [ 0 | a1 | 0 | r1 | 0 | g1 | 0 | b1 | 0 | a2 | 0 | r2 | 0 | g2 | 0 | b2 ]
 
-	movups xmm3, xmm1
+	movups xmm3, xmm1 ; xmm3 = xmm1 = [ 0 | a3 | 0 | r3 | 0 | g3 | 0 | b3 | 0 | a4 | 0 | r4 | 0 | g4 | 0 | b4 ]
 
-	shr xmm2, 2				
+	shr xmm2, 2 ; [ F | F | 0 | a1 | 0 | r1 | 0 | g1 | 0 | b1 | 0 | a2 | 0 | r2 | 0 | g2 ]				
 
-	shr xmm3, 2				
+	shr xmm3, 2	; [ F | F | 0 | a3 | 0 | r3 | 0 | g3 | 0 | b3 | 0 | a4 | 0 | r4 | 0 | g4 ]		
 
-	paddw xmm0, xmm2		;acumulo b + g
+	paddw xmm0, xmm2 ; acumulo b + g
 
-	paddw xmm1, xmm3		;acumulo b + g
+	paddw xmm1, xmm3 ; acumulo b + g
 
-	shr xmm2, 2				
+	shr xmm2, 2	; [ F | F | F | F | 0 | a1 | 0 | r1 | 0 | g1 | 0 | b1 | 0 | a2 | 0 | r2 ]						
 
-	shr xmm3, 2				
+	shr xmm3, 2	; [ F | F | F | F | 0 | a3 | 0 | r3 | 0 | g3 | 0 | b3 | 0 | a4 | 0 | r4 ]					
 
-	paddw xmm0, xmm2		;acumulo (b+g) + r EN B
+	paddw xmm0, xmm2 ; acumulo (b+g) + r EN B
 
-	paddw xmm1, xmm3		;acumulo (b+g) + r EN B
+	paddw xmm1, xmm3 ; acumulo (b+g) + r EN B
+
+	
+
+
+
 
 	0a0s0s0s|0a0s0s0s (buscar shuffle que mueva words)
 	pasar a float cvt
