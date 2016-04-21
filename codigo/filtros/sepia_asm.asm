@@ -39,17 +39,17 @@ movups xmm8, [multiplicadores]
 
 	movups xmm3, xmm1 ; xmm3 = xmm1 = [ 0 a3 | 0  r3 | 0 g3 | 0  b3 | 0  a2 | 0  r2 | 0  g2 | 0  b2 ]
 
-	psrlq xmm2, 2 ; [ 0 0 | 0 a1 | 0 r1 | 0 g1 ||| 0  0 | 0  a0 | 0  r0 | 0  g0 ]				
+	psrlq xmm2, 16 ; [ 0 0 | 0 a1 | 0 r1 | 0 g1 ||| 0  0 | 0  a0 | 0  r0 | 0  g0 ]				
 
-	psrlq xmm3, 2	; [ 0 0 | 0 a3 | 0 r3 | 0 g3 ||| 0  0 | 0  a2 | 0  r2 | 0  g2 ]		
+	psrlq xmm3, 16	; [ 0 0 | 0 a3 | 0 r3 | 0 g3 ||| 0  0 | 0  a2 | 0  r2 | 0  g2 ]		
 
 	paddw xmm0, xmm2 ; acumulo b + g
 
 	paddw xmm1, xmm3 ; acumulo b + g
 
-	psrlq xmm2, 2	; [ 0 0 | 0 0 | 0 a1 | 0 r1 ||| 0  0 | 0  0 | 0  a0 | 0  r0 ]						
+	psrlq xmm2, 16	; [ 0 0 | 0 0 | 0 a1 | 0 r1 ||| 0  0 | 0  0 | 0  a0 | 0  r0 ]						
 
-	psrlq xmm3, 2	; [ 0  0 | 0 0 | 0 a3 | 0 r3 ||| 0 0 | 0 0 | 0 a2 | 0 r2 ]					
+	psrlq xmm3, 16	; [ 0  0 | 0 0 | 0 a3 | 0 r3 ||| 0 0 | 0 0 | 0 a2 | 0 r2 ]					
 
 	paddw xmm0, xmm2 ; acumulo (b+g) + r EN B 
 	paddw xmm1, xmm3 ; acumulo (b+g) + r EN B
@@ -88,11 +88,11 @@ movups xmm8, [multiplicadores]
 	cvtps2dq xmm2,xmm2 
 	cvtps2dq xmm3,xmm3 
 
-	packusdw xmm1, xmm0
-	packusdw xmm3, xmm2 
-	packuswb xmm3,xmm1
+	packusdw xmm0, xmm1
+	packusdw xmm2, xmm3 
+	packuswb xmm0,xmm2
 
-	movups [rsi], xmm3
+	movups [rsi], xmm0
 
 	lea rsi, [rsi+tam_4pxs]
 
@@ -106,6 +106,3 @@ movups xmm8, [multiplicadores]
 	.fin:
 	pop rbp
 	ret
-
-
-	
