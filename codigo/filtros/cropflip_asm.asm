@@ -43,7 +43,6 @@ mov r8d, r14d ; TIENE TAMY
 
 	cmp r10, r14  ; si el indice de la fila = tamy
 	je .fin
-	.cicloJ:
 	
 	cmp r11, r9 ;veo si r11 llego al tope de la fila
 	jge .cambioFila
@@ -53,14 +52,14 @@ mov r8d, r14d ; TIENE TAMY
 	dec r14			;tamy + off -i -1
 	mov r12, rax
 	mov rax, rdx
-	mul r14			;(tamy + off -i -1)*cols
-	mov r14, rax
+	imul r14, rdx
+	;mul r14			;(tamy + off -i -1)*cols
+	;mov r14, rax
 	mov rax, r12
 
 	add r15, r11	;ox+j
-
 	add r14, r15;
-	movdqu xmm0, [rdi+r14 * 4]  ; si copie bien, formula sacada de la diapo para moverme en matrices
+	movdqu xmm0, [rdi+r14*4]  ; si copie bien, formula sacada de la diapo para moverme en matrices
 	
 	mov r14, r8
 	sub r15, r11
@@ -73,7 +72,7 @@ mov r8d, r14d ; TIENE TAMY
 
 	;inc r11
 	add r11, 4
-	jmp .cicloJ
+	jmp .ciclo
 
 	.cambioFila
 	inc r10
