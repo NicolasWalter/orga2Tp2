@@ -4,7 +4,7 @@
 global ldr_asm
 
 section .data
-maximo: DD 0.000000205 , 0.000000205 , 0.000000205 , 0.000000205
+multiplicadores: DD 0.000000205 , 0.000000205 , 0.000000205 , 0.000000205
 wacharaka: DW 255 , 255 , 255 , 255 ;mierda para testear
 section .text
 ;void ldr_asm    (
@@ -96,7 +96,7 @@ pxor xmm14,xmm14	;Acul Col 8
 			psrlq xmm0,16
 			paddd xmm1,xmm0
 			psrlq xmm0,16
-			paddd xmm1,xmm0; deberia tener la super suma rgb en B
+			paddd xmm1,xmm0; deberia tener la super suma en B
 			pshufd xmm1,xmm1, 00000000b ;meti la suma en todos lados
 			paddd xmm14,xmm1 ;acumulo en 14 la super suma ?
 			inc r11
@@ -110,44 +110,16 @@ pxor xmm14,xmm14	;Acul Col 8
 		mov rdx, r13
 		shl rdx, 2 ;j*4
 		add r9,rdx ;(fila*cols*4)+(j*4)
-		movups xmm0, [rdi+r9]
-		movups xmm1,xmm0
-		punpcklbw xmm0, xmm7 ; xmm0 = [ 0 a1 | 0  r1 | 0 g1 | 0  b1 | 0  a0 | 0  r0 | 0  g0 | 0  b0 ]
-
-		punpckhbw xmm1, xmm7  ;probar si funca o hay que usar wd [ 0 a3 | 0  r3 | 0 g3 | 0  b3 | 0  a2 | 0  r2 | 0  g2 | 0  b2 ]
-		movups xmm2,xmm0
-		movups xmm3,xmm1
-
+		movdqu xmm0, [rdi+r9] ;con la cuenta saque la posicion de los 4 que voy a modificar
+		movdqu xmm1,xmm0
 		psrlq xmm14,16
-
-		mulps xmm1,xmm14
-		mulps xmm0,xmm14
-		mulps xmm1,[wacharaka]
-		mulps xmm0,[wacharaka]
-		mulps xmm1,[maximo]
-		mulps xmm0, [maximo]
-		paddw xmm2,xmm0
-		paddw xmm3,xmm1
-		packuswb xmm0,xmm1
-
-
-
-
-
-
-
-		; movdqu xmm1,xmm0
-		; psrlq xmm14,16
-		; mulps xmm1,xmm14 ;r*s falta el ALFA 
-		; mulps xmm1,[wacharaka]
-		; mulpd xmm1,[maximo] ;divido
-		; paddd xmm1,xmm0
-		;pxor xmm0,xmm0
-		 
-		movdqu[rsi+r9],xmm1
+		mulpd xmm1,xmm14 ;r*s falta el ALFA 
+		mulpd xmm1,[wacharaka]
+		mulpd xmm1,[multiplicadores] ;divido
+		paddd xmm1,xmm0		 
+		movups[rsi+r9],xmm1
 		jmp .volverACiclo
 	.finVecInterior:
-	;deberia tener en xmm14 la super suma x4
 	inc r8
 	mov r11,-2
 	jmp .cicloVecinosExterior

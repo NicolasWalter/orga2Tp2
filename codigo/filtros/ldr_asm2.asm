@@ -26,20 +26,20 @@ push r15
 xor r10,r10
 mov r10d, [rbp+16] ; alpha
 mov r12,2 ;indice fila en 2
-mov r13,8 ; indice col en 2
+mov r13,2 ; indice col en 2
 mov r14,rdx
 mov r15,rcx
 sub r14,2;TOPE FILA
-sub r15,8;TOPE COL
+sub r15,2;TOPE COL
 
 xor rdx,rdx
 xor r9,r9
 pcmpeqw xmm0,xmm0
 .ciclo:
 	
-	cmp r12,10
+	cmp r12,r14
 	je .fin
-	cmp r13,10
+	cmp r13,r15
 	jge .cambioFila
 
 	mov r9,r12  ;meto la fila en la que estoy laburando
@@ -51,7 +51,6 @@ pcmpeqw xmm0,xmm0
 
 
 	movdqu [rsi +r9],xmm0
-	lea rsi,[rsi+r9]
 
 
 	;inc r13
@@ -60,7 +59,7 @@ pcmpeqw xmm0,xmm0
 
 	.cambioFila:
 	inc r12
-	mov r13,8
+	mov r13,2
 	jmp .ciclo
 
 
