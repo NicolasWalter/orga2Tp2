@@ -4,8 +4,9 @@
 global ldr_asm
 
 section .data
-maximo: DD 0.000000205 , 0.000000205 , 0.000000205 , 0.000000205
-wacharaka: DW 255 , 255 , 255 , 255 ;mierda para testear
+;!!!!!!!!!!!!!!!!!!!!!!!!!!! VER SI TIENEN QUE SER DD DW O QUE MIERDA
+maximo: DW 4876875 , 4876875 , 4876875 , 4876875  
+wacharaka: DW 1 , 1 , 1 , 1 ;mierda para testear
 section .text
 ;void ldr_asm    (
 	;unsigned char *src,		RDI
@@ -81,25 +82,56 @@ pxor xmm14,xmm14	;Acul Col 8
 			add r9,rdx
 
 			;levanto esos 4 del source
-			movups xmm0,[rdi+r9]
-			movups xmm1,xmm0
+			movdqu xmm0,[rdi+r9]
+			movdqu xmm1,xmm0
 
 			punpcklbw xmm0,xmm15 ;[ a1 | r1 | g1 | b1 || a0 | r0 | g0 | b0 ]
 			punpckhbw xmm1,xmm15 ;[ a3 | r3 | g3 | b3 || a2 | r2 | g2 | b2 ]
 			
-			paddw xmm0,xmm1 ;[a1+a3 | r1+r3 ...|| a0+a2 ..| b0+b2]
-			movups xmm1,xmm0
-			punpcklwd xmm0,xmm15;[ a0+a2 | r0+r2 | g0+g2 | b0+b2 ]
-			punpckhwd xmm1,xmm15;[ a1+a3 | r1+r3 | g1+g3 | b1+a3 ]
-			paddd xmm0,xmm1;[a0+a2+a1+a3 |...| b0+b2+b1+b3]
-			movups xmm1,xmm0
-			psrlq xmm0,16
+			; paddw xmm0,xmm1 ;[a1+a3 | r1+r3 ...|| a0+a2 ..| b0+b2]
+			; movdqu xmm1,xmm0
+			; punpcklwd xmm0,xmm15;[ a0+a2 | r0+r2 | g0+g2 | b0+b2 ]
+			; punpckhwd xmm1,xmm15;[ a1+a3 | r1+r3 | g1+g3 | b1+a3 ]
+
+
+
+
+
+			;ESTO ES NUEVO, DESEMPAQUETE ACA TAMBIEN 
+			movdqu xmm2,xmm1
+			movdqu xmm3,xmm2
+			movdqu xmm1,xmm0
+			punpcklbw xmm0,xmm15
+			punpckhbw xmm1,xmm15
+			punpcklbw xmm2,xmm15
+			punpckhbw xmm3,xmm15
+			paddd xmm0,xmm1
+			paddd xmm0,xmm2
+			paddd xmm0,xmm3 ; [ a+a+a+a | r+r+r+r | g+g+g+g | b+b+b+b ]
+			movdqu xmm1,xmm0
+			psrld xmm0,16 ;VER TAMAÑO
 			paddd xmm1,xmm0
-			psrlq xmm0,16
-			paddd xmm1,xmm0; deberia tener la super suma rgb en B
-			pshufd xmm1,xmm1, 00000000b ;meti la suma en todos lados
-			paddd xmm14,xmm1 ;acumulo en 14 la super suma ?
-			inc r11
+			psrld xmm0,16
+			paddd xmm1,xmm0
+			pshufd xmm1,xmm1, 00000000b
+			paddd xmm14,xmm1
+			add r11,4
+
+
+
+
+
+
+
+			;paddd xmm0,xmm1;[a0+a2+a1+a3 |...| b0+b2+b1+b3]
+			; movdqu xmm1,xmm0
+			; psrlq xmm0,16
+			; paddd xmm1,xmm0
+			; psrlq xmm0,16
+			; paddd xmm1,xmm0; deberia tener la super suma en B [Fruta | fruta | fruta | b0+...+b3+...+g0+ .. g4]
+			;pshufd xmm1,xmm1, 00000000b ;meti la suma en todos lados 
+			;paddd xmm14,xmm1 ;acumulo en 14 la super suma ?
+			;add r11, 1  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; sumo 1? o sumo mas???????
 			jmp .cicloVecinosInterior
 
 
@@ -110,44 +142,78 @@ pxor xmm14,xmm14	;Acul Col 8
 		mov rdx, r13
 		shl rdx, 2 ;j*4
 		add r9,rdx ;(fila*cols*4)+(j*4)
-		movups xmm0, [rdi+r9]
-		movups xmm1,xmm0
-		punpcklbw xmm0, xmm7 ; xmm0 = [ 0 a1 | 0  r1 | 0 g1 | 0  b1 | 0  a0 | 0  r0 | 0  g0 | 0  b0 ]
+		movdqu xmm0, [rdi+r9] ;con la cuenta saque la posicion de los 4 que voy a modificar
+		
+		movdqu xmm2,xmm0
+		punpcklbw xmm0,xmm15
+		punpckhbw xmm2,xmm15
+		movdqu xmm3,xmm2
+		movdqu xmm1,xmm0
 
-		punpckhbw xmm1, xmm7  ;probar si funca o hay que usar wd [ 0 a3 | 0  r3 | 0 g3 | 0  b3 | 0  a2 | 0  r2 | 0  g2 | 0  b2 ]
-		movups xmm2,xmm0
-		movups xmm3,xmm1
+		punpcklwd xmm0,xmm15 ; p0
+		punpckhwd xmm1,xmm15 ; p1
+		punpcklwd xmm2,xmm15 ; p2
+		punpckhwd xmm3,xmm15 ; p3
+		psrld xmm14,16
 
-		psrlq xmm14,16
+		movdqu xmm10,xmm0
+		movdqu xmm11,xmm1
+		movdqu xmm12,xmm2
+		movdqu xmm13,xmm3
 
-		mulps xmm1,xmm14
-		mulps xmm0,xmm14
-		mulps xmm1,[wacharaka]
-		mulps xmm0,[wacharaka]
-		mulps xmm1,[maximo]
-		mulps xmm0, [maximo]
-		paddw xmm2,xmm0
-		paddw xmm3,xmm1
-		packuswb xmm0,xmm1
+		 pmuludq xmm0,xmm14 ;es la posta?
+		 pmuludq xmm1,xmm14
+		 pmuludq xmm2,xmm14
+		 pmuludq xmm3,xmm14
+
+		movdqu xmm8,[wacharaka]
+
+		 pmuludq xmm0,xmm8 ;r*s*ALFA
+		 pmuludq xmm1,xmm8
+		 pmuludq xmm2,xmm8
+		 pmuludq xmm3,xmm8
+
+		cvtdq2ps xmm0,xmm0
+		cvtdq2ps xmm1,xmm1
+		cvtdq2ps xmm2,xmm2
+		cvtdq2ps xmm3,xmm3
+
+		movdqu xmm8,[maximo]
+
+		divps xmm0,xmm8
+		divps xmm1,xmm8
+		divps xmm2,xmm8
+		divps xmm3,xmm8
+
+		cvtps2dq xmm0,xmm0
+		cvtps2dq xmm1,xmm1
+		cvtps2dq xmm2,xmm2
+	 	cvtps2dq xmm3,xmm3
+
+		paddd xmm10,xmm0
+		paddd xmm11,xmm1
+		paddd xmm12,xmm2
+		paddd xmm13,xmm3
+
+	
 
 
+	 	packusdw xmm10,xmm11
+	 	packusdw xmm12,xmm13
+	 	packuswb xmm10,xmm12
 
-
-
-
-
-		; movdqu xmm1,xmm0
-		; psrlq xmm14,16
-		; mulps xmm1,xmm14 ;r*s falta el ALFA 
-		; mulps xmm1,[wacharaka]
-		; mulpd xmm1,[maximo] ;divido
+		; mulpd xmm1,xmm14 ;r*s falta el ALFA 
+		; mulpd xmm1,[wacharaka]
+		; mulpd xmm1,[multiplicadores] ;divido
 		; paddd xmm1,xmm0
-		;pxor xmm0,xmm0
-		 
-		movdqu[rsi+r9],xmm1
+
+
+
+
+
+		movdqu[rsi+r9],xmm10
 		jmp .volverACiclo
 	.finVecInterior:
-	;deberia tener en xmm14 la super suma x4
 	inc r8
 	mov r11,-2
 	jmp .cicloVecinosExterior
@@ -173,4 +239,5 @@ pop r12
 pop rbp
 ret
  
+	
 	
