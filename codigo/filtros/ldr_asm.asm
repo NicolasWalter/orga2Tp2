@@ -5,7 +5,7 @@ global ldr_asm
 
 section .data
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!! VER SI TIENEN QUE SER DD DW O QUE MIERDA
-maximo: DD 0.000000205 , 0.000000205 , 0.000000205 , 0.000000205  
+maximo: DD 4876875 , 4876875 , 4876875 , 4876875  
 section .text
 ;void ldr_asm    (
 	;unsigned char *src,		RDI
@@ -97,8 +97,8 @@ pxor xmm14,xmm14
 			pslld xmm0,16
 			psrld xmm0,24
 
-			paddw xmm0,xmm1
-			paddw xmm0,xmm2
+			paddd xmm0,xmm1
+			paddd xmm0,xmm2
 
 
 			; punpcklbd xmm0,xmm15 ;[ a1 | r1 | g1 | b1 || a0 | r0 | g0 | b0 ]
@@ -152,11 +152,13 @@ pxor xmm14,xmm14
 			paddd xmm13,xmm0
 			add r11,4
 
-			.sonDeLasSegundas4Cols
+			jmp .cicloVecinosInterior
+
+			.sonDeLasSegundas4Cols:
 
 			paddd xmm14,xmm0
 			add r11,4
-jmp .cicloVecinosInterior
+			jmp .cicloVecinosInterior
 
 
 	.finVecExterior:
@@ -182,48 +184,59 @@ jmp .cicloVecinosInterior
 
 		movdqu xmm4,xmm13
 		movdqu xmm6,xmm13
-		punpcklbw xmm4,xmm15
-		punpckhbw xmm6,xmm15
+		punpckldq xmm4,xmm15
+		punpckhdq xmm6,xmm15
+
 
 		movdqu xmm5,xmm4
 		movdqu xmm7,xmm6
 
-		punpcklwd xmm4,xmm15 ;SUMA COL 0
-		punpckhwd xmm5,xmm15 ;SUMA COL 1
-		punpcklwd xmm6,xmm15 ;SUMA COL 2
-		punpckhwd xmm7,xmm15 ;SUMA COL 3
+		punpcklqdq xmm4,xmm15 ;SUMA COL 0
+		punpckhqdq xmm5,xmm15 ;SUMA COL 1
+		punpcklqdq xmm6,xmm15 ;SUMA COL 2
+		punpckhqdq xmm7,xmm15 ;SUMA COL 3
 
 		movdqu xmm8,xmm14
 		movdqu xmm10,xmm14
-		punpcklbw xmm8,xmm15
-		punpckhbw xmm10,xmm15
+		punpckldq xmm8,xmm15
+		punpckhdq xmm10,xmm15
 
 		movdqu xmm9,xmm8
 		movdqu xmm11,xmm10
 
-		punpcklwd xmm8,xmm15 ;SUMA COL 4
-		punpckhwd xmm9,xmm15 ;SUMA COL 5
-		punpcklwd xmm10,xmm15 ;SUMA COL 6
-		punpckhwd xmm11,xmm15 ;SUMA COL 7
+		punpcklqdq xmm8,xmm15 ;SUMA COL 4
+		punpckhqdq xmm9,xmm15 ;SUMA COL 5
+		punpcklqdq xmm10,xmm15 ;SUMA COL 6
+		punpckhqdq xmm11,xmm15 ;SUMA COL 7
 
 
  
 		;Pixel 0(col0 a col4)
+		;NO SE SI ESTAN BIEN LAS SUMAS CON PADDD
 		pxor xmm13,xmm13
 		paddd xmm13,xmm4
 		paddd xmm13,xmm5
 		paddd xmm13,xmm6
 		paddd xmm13,xmm7
 		paddd xmm13,xmm8
+		pshufd xmm13,xmm13, 00000000b
 
 		movdqu xmm12,xmm0
-		pmuldq xmm12,xmm13
+		movdqu xmm14,xmm0
+		pmuludq xmm12,xmm13
+		pshufd xmm14, xmm14, 10010011b
+		pmuludq xmm14,xmm13
+		pshufd xmm14, xmm14, 00111001b
+		paddd xmm12,xmm14
 
 		movd xmm13,r10d;meto el alpha
-		pmuldq xmm12,xmm13
+		pshufd xmm13, xmm13, 00000000b;meto el alpha
+		pshufd xmm13, xmm13, 00000000b
+		;pmuludq xmm12,xmm13
 		cvtdq2ps xmm12,xmm12
+		mulps xmm12, xmm13
 		movdqu xmm13,[maximo]
-		mulps xmm12,xmm13
+		divps xmm12,xmm13
 		cvtps2dq xmm12,xmm12
 		paddq xmm0,xmm12
 
@@ -234,15 +247,24 @@ jmp .cicloVecinosInterior
 		paddd xmm13,xmm7
 		paddd xmm13,xmm8
 		paddd xmm13,xmm9
+		pshufd xmm13,xmm13, 00000000b
 
 		movdqu xmm12,xmm1
-		pmuldq xmm12,xmm13
+		movdqu xmm14,xmm1
+		pmuludq xmm12,xmm13
+		pshufd xmm14, xmm14, 10010011b
+		pmuludq xmm14,xmm13
+		pshufd xmm14, xmm14, 00111001b
+		paddd xmm12,xmm14
+		;pmuludq xmm12,xmm13
 
 		movd xmm13,r10d;meto el alpha
-		pmuldq xmm12,xmm13
+		pshufd xmm13, xmm13, 00000000b;meto el alpha
+		;pmuludq xmm12,xmm13
 		cvtdq2ps xmm12,xmm12
+		mulps xmm12, xmm13
 		movdqu xmm13,[maximo]
-		mulps xmm12,xmm13
+		divps xmm12,xmm13
 		cvtps2dq xmm12,xmm12
 		paddq xmm1,xmm12
 
@@ -254,14 +276,23 @@ jmp .cicloVecinosInterior
 		paddd xmm13,xmm9
 		paddd xmm13,xmm10
 
+		pshufd xmm13,xmm13, 00000000b
+
 		movdqu xmm12,xmm2
-		pmuldq xmm12,xmm13
+		movdqu xmm14,xmm2
+		pmuludq xmm12,xmm13
+		pshufd xmm14, xmm14, 10010011b
+		pmuludq xmm14,xmm13
+		pshufd xmm14, xmm14, 00111001b
+		paddd xmm12,xmm14
 
 		movd xmm13,r10d;meto el alpha
-		pmuldq xmm12,xmm13
+		pshufd xmm13, xmm13, 00000000b;meto el alpha
+		;pmuludq xmm12,xmm13
 		cvtdq2ps xmm12,xmm12
+		mulps xmm12, xmm13
 		movdqu xmm13,[maximo]
-		mulps xmm12,xmm13
+		divps xmm12,xmm13
 		cvtps2dq xmm12,xmm12
 		paddq xmm2,xmm12
 
@@ -273,14 +304,23 @@ jmp .cicloVecinosInterior
 		paddd xmm13,xmm10
 		paddd xmm13,xmm11
 
+		pshufd xmm13,xmm13, 00000000b
+
 		movdqu xmm12,xmm3
-		pmuldq xmm12,xmm13
+		movdqu xmm14,xmm3
+		pmuludq xmm12,xmm13
+		pshufd xmm14, xmm14, 10010011b
+		pmuludq xmm14,xmm13
+		pshufd xmm14, xmm14, 00111001b
+		paddd xmm12,xmm14
 
 		movd xmm13,r10d;meto el alpha
-		pmuldq xmm12,xmm13
+		pshufd xmm13, xmm13, 00000000b;meto el alpha
+		;pmuludq xmm12,xmm13
 		cvtdq2ps xmm12,xmm12
+		mulps xmm12, xmm13
 		movdqu xmm13,[maximo]
-		mulps xmm12,xmm13
+		divps xmm12,xmm13
 		cvtps2dq xmm12,xmm12
 		paddq xmm3,xmm12
 
