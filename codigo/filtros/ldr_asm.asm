@@ -38,16 +38,20 @@ xor rdx,rdx
 xor r9,r9
 pxor xmm15,xmm15 ;lo voy a usar para desempaquetar
 pxor xmm0,xmm0
-
-pxor xmm6,xmm6		;Acum Col 0
-pxor xmm7,xmm7		;Acul Col 1
-pxor xmm8,xmm8		;Acul Col 2
-pxor xmm9,xmm9		;Acul Col 3
-pxor xmm10,xmm10	;Acul Col 4
-pxor xmm11,xmm11	;Acul Col 5
-pxor xmm12,xmm12	;Acul Col 6
-pxor xmm13,xmm13	;Acul Col 7
-pxor xmm14,xmm14	;Acul Col 8
+pxor xmm1,xmm1
+pxor xmm2,xmm2
+pxor xmm3,xmm3
+pxor xmm4,xmm4
+pxor xmm5,xmm5
+pxor xmm6,xmm6		
+pxor xmm7,xmm7		
+pxor xmm8,xmm8		
+pxor xmm9,xmm9		
+pxor xmm10,xmm10	
+pxor xmm11,xmm11	
+pxor xmm12,xmm12	
+pxor xmm13,xmm13	
+pxor xmm14,xmm14	
 .ciclo:
 	
 	cmp r12,r14
@@ -84,12 +88,6 @@ pxor xmm14,xmm14	;Acul Col 8
 			;levanto esos 4 del source
 			movdqu xmm0,[rdi+r9]
 			movdqu xmm1,xmm0
-			;		XXXXXXXX
-			;		XXXXXXXX
-			;		XXPPPPXX
-			;		XXXXXXXX
-			;		XXXXXXXX
-
 
 			punpcklbw xmm0,xmm15 ;[ a1 | r1 | g1 | b1 || a0 | r0 | g0 | b0 ]
 			punpckhbw xmm1,xmm15 ;[ a3 | r3 | g3 | b3 || a2 | r2 | g2 | b2 ]
@@ -118,24 +116,6 @@ pxor xmm14,xmm14	;Acul Col 8
 			packuswb xmm0,xmm1 ;
 
 
-			; paddw xmm0,xmm1 ;[a1+a3 | r1+r3 ...|| a0+a2 ..| b0+b2]
-			; movdqu xmm1,xmm0
-			; punpcklwd xmm0,xmm15;[ a0+a2 | r0+r2 | g0+g2 | b0+b2 ]
-			; punpckhwd xmm1,xmm15;[ a1+a3 | r1+r3 | g1+g3 | b1+a3 ]
-			
-
-
-			;ESTO ES NUEVO, DESEMPAQUETE ACA TAMBIEN 
-			; movdqu xmm2,xmm1
-			; movdqu xmm3,xmm2
-			; movdqu xmm1,xmm0
-			; punpcklwd xmm0,xmm15;p0
-			; punpckhwd xmm1,xmm15;p1
-			; punpcklwd xmm2,xmm15;p2
-			; punpckhwd xmm3,xmm15;p3
-
-
-
 			cmp r11,-2
 			je .sonDeLasPrimeras4Cols
 			jmp .sonDeLasSegundas4Cols
@@ -152,36 +132,7 @@ pxor xmm14,xmm14	;Acul Col 8
 
 			paddb xmm14,xmm0
 			add r11,4
-
-
-			; paddd xmm0,xmm1
-			; paddd xmm0,xmm2 ;		11		10			01		00
-			; paddd xmm0,xmm3 ; [ a+a+a+a | r+r+r+r | g+g+g+g | b+b+b+b ]
-			
-
-
-			; movdqu xmm1,xmm0
-			; pshufd xmm1,xmm1,11111001b ;[ a+a+a+a | a+a+a+a  | r+r+r+r | g+g+g+g ]
-			; paddd xmm0,xmm1
-			; pshufd xmm1,xmm1,11111101b;[ a+a+a+a | a+a+a+a  | a+a+a+a  | r+r+r+r]
-			; paddd xmm0,xmm1; me queda en B la suma 4b+4g+4r
-			; pshufd xmm0,xmm0, 00000000b
-			; paddd xmm14,xmm0
-			; add r11,4
-
-
-
-			;paddd xmm0,xmm1;[a0+a2+a1+a3 |...| b0+b2+b1+b3]
-			; movdqu xmm1,xmm0
-
-			; psrld xmm0,16
-			; paddd xmm1,xmm0
-			; psrld xmm0,16
-			; paddd xmm1,xmm0; deberia tener la super suma en B [Fruta | fruta | fruta | b0+...+b3+...+g0+ .. g4]
-			; pshufd xmm1,xmm1, 00000000b ;meti la suma en todos lados 
-			; paddd xmm14,xmm1 ;acumulo en 14 la super suma ?
-			; add r11, 1  ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; sumo 1? o sumo mas???????
-			jmp .cicloVecinosInterior
+jmp .cicloVecinosInterior
 
 
 	.finVecExterior:
@@ -203,38 +154,7 @@ pxor xmm14,xmm14	;Acul Col 8
 		punpckhwd xmm1,xmm15 ; p1 ---> col1 2 3 4 5
 		punpcklwd xmm2,xmm15 ; p2----> col2 3 4 5 6
 		punpckhwd xmm3,xmm15 ; p3----> col3 4 5 6 7
-		;psrld xmm14,16
 
-		; movdqu xmm7,xmm13;suma primeras 4
-		; movdqu xmm8,xmm14; suma otras 4  [7 6 5 4]
-
-
-		; ;Laburo con el pixel 0
-		; movdqu xmm9,xmm7;copia de la copia :O
-		; pshufd xmm9,xmm9,11111001b
-		; paddd xmm7,xmm9
-		; pshufd xmm9,xmm9,11111101b
-		; paddd xmm7,xmm9
-		; pshufd xmm7,xmm7,00000000b;tengo la suma 4 veces
-
-		; pshufd xmm8,xmm8,00000000b
-
-		; paddd xmm7,xmm8
-
-		; movdqu xmm9,xmm0
-		; pmuldq xmm9,xmm7
-
-		; movdqu xmm8,[Alpha]
-		; pmuldq xmm9,xmm8
-		; cvtdq2ps xmm9,xmm9
-		; movdqu xmm8,[maximo]
-		; mulps xmm9,xmm8
-		; cvtps2dq xmm9,xmm9
-		; paddq xmm0,xmm9
-
-		;Laburo con el pixel 1
-
-		;SEPARO LAS SUMAS XMM4 A XMM11
 
 		movdqu xmm4,xmm13
 		movdqu xmm6,xmm13
@@ -264,97 +184,87 @@ pxor xmm14,xmm14	;Acul Col 8
 
  
 		;Pixel 0(col0 a col4)
+		pxor xmm11,xmm11
 		paddd xmm11,xmm3
 		paddd xmm11,xmm4
 		paddd xmm11,xmm5
 		paddd xmm11,xmm6
 		paddd xmm11,xmm7
 
-		movdqu xmm9,xmm0
-		pmuldq xmm9,xmm11
+		movdqu xmm12,xmm0
+		pmuldq xmm12,xmm11
 
-		movdqu xmm12,[Alpha]
-		pmuldq xmm9,xmm8
-		cvtdq2ps xmm9,xmm9
-		movdqu xmm8,[maximo]
-		mulps xmm9,xmm8
-		cvtps2dq xmm9,xmm9
-		paddq xmm0,xmm9
+		movdqu xmm11,[Alpha]
+		pmuldq xmm12,xmm11
+		cvtdq2ps xmm12,xmm12
+		movdqu xmm11,[maximo]
+		mulps xmm12,xmm11
+		cvtps2dq xmm12,xmm12
+		paddq xmm0,xmm12
 
+		;Pixel 1(col1 a col5)
+		pxor xmm11,xmm11
+		paddd xmm11,xmm4
+		paddd xmm11,xmm5
+		paddd xmm11,xmm6
+		paddd xmm11,xmm7
+		paddd xmm11,xmm8
 
+		movdqu xmm12,xmm1
+		pmuldq xmm12,xmm11
 
+		movdqu xmm11,[Alpha]
+		pmuldq xmm12,xmm11
+		cvtdq2ps xmm12,xmm12
+		movdqu xmm11,[maximo]
+		mulps xmm12,xmm11
+		cvtps2dq xmm12,xmm12
+		paddq xmm1,xmm12
 
-		; movdqu xmm10,xmm0
-		; movdqu xmm11,xmm1
-		; movdqu xmm12,xmm2
-		; movdqu xmm13,xmm3
+		;Pixel 2
+		pxor xmm11,xmm11
+		paddd xmm11,xmm5
+		paddd xmm11,xmm6
+		paddd xmm11,xmm7
+		paddd xmm11,xmm8
+		paddd xmm11,xmm9
 
-		;  pmuldq xmm0,xmm14 ;es la posta?
-		;  pmuldq xmm1,xmm14
-		;  pmuldq xmm2,xmm14
-		;  pmuldq xmm3,xmm14
+		movdqu xmm12,xmm2
+		pmuldq xmm12,xmm11
 
-		; movdqu xmm8,[Alpha]
+		movdqu xmm11,[Alpha]
+		pmuldq xmm12,xmm11
+		cvtdq2ps xmm12,xmm12
+		movdqu xmm11,[maximo]
+		mulps xmm12,xmm11
+		cvtps2dq xmm12,xmm12
+		paddq xmm2,xmm12
 
-		;  pmuldq xmm0,xmm8 ;r*s*ALFA
-		;  pmuldq xmm1,xmm8
-		;  pmuldq xmm2,xmm8
-		;  pmuldq xmm3,xmm8
+		;Pixel 3
+		pxor xmm11,xmm11
+		paddd xmm11,xmm6
+		paddd xmm11,xmm7
+		paddd xmm11,xmm8
+		paddd xmm11,xmm9
+		paddd xmm11,xmm10
 
-		; cvtdq2ps xmm0,xmm0
-		; cvtdq2ps xmm1,xmm1
-		; cvtdq2ps xmm2,xmm2
-		; cvtdq2ps xmm3,xmm3
+		movdqu xmm12,xmm3
+		pmuldq xmm12,xmm11
 
-		; movdqu xmm8,[maximo]
-
-		; mulps xmm0,xmm8
-		; mulps xmm1,xmm8
-		; mulps xmm2,xmm8
-		; mulps xmm3,xmm8
-
-		; cvtps2dq xmm0,xmm0
-		; cvtps2dq xmm1,xmm1
-		; cvtps2dq xmm2,xmm2
-	 ; 	cvtps2dq xmm3,xmm3
-
-		; paddd xmm10,xmm0
-		; paddd xmm11,xmm1
-		; paddd xmm12,xmm2
-		; paddd xmm13,xmm3
-
-	
-
-
-	 ; 	packusdw xmm10,xmm11
-	 ; 	packusdw xmm12,xmm13
-	 ; 	packuswb xmm10,xmm12
-
-
-
-
-
-
-
-
-
-
+		movdqu xmm11,[Alpha]
+		pmuldq xmm12,xmm11
+		cvtdq2ps xmm12,xmm12
+		movdqu xmm11,[maximo]
+		mulps xmm12,xmm11
+		cvtps2dq xmm12,xmm12
+		paddq xmm3,xmm12
 
 
+		packusdw xmm0,xmm1
+	  	packusdw xmm2,xmm3
+	  	packuswb xmm0,xmm2
 
-
-
-
-		; mulpd xmm1,xmm14 ;r*s falta el ALFA 
-		; mulpd xmm1,[wacharaka]
-		; mulpd xmm1,[multiplicadores] ;divido
-		; paddd xmm1,xmm0
-
-
-
-
-
-		movdqu[rsi+r9],xmm10
+		movdqu[rsi+r9],xmm0
 		jmp .volverACiclo
 	.finVecInterior:
 	inc r8
