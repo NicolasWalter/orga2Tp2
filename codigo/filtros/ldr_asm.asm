@@ -6,7 +6,6 @@ global ldr_asm
 section .data
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!! VER SI TIENEN QUE SER DD DW O QUE MIERDA
 maximo: DD 0.000000205 , 0.000000205 , 0.000000205 , 0.000000205  
-Alpha: DD 255 , 255 , 255 , 255 ;mierda para testear
 section .text
 ;void ldr_asm    (
 	;unsigned char *src,		RDI
@@ -161,103 +160,105 @@ jmp .cicloVecinosInterior
 		punpcklbw xmm4,xmm15
 		punpckhbw xmm6,xmm15
 
-		movdqu xmm3,xmm4
-		movdqu xmm5,xmm6
+		movdqu xmm5,xmm4
+		movdqu xmm7,xmm6
 
-		punpcklwd xmm3,xmm15 ;SUMA COL 0
-		punpckhwd xmm4,xmm15 ;SUMA COL 1
-		punpcklwd xmm5,xmm15 ;SUMA COL 2
-		punpckhwd xmm6,xmm15 ;SUMA COL 3
+		punpcklwd xmm4,xmm15 ;SUMA COL 0
+		punpckhwd xmm5,xmm15 ;SUMA COL 1
+		punpcklwd xmm6,xmm15 ;SUMA COL 2
+		punpckhwd xmm7,xmm15 ;SUMA COL 3
 
 		movdqu xmm8,xmm14
 		movdqu xmm10,xmm14
 		punpcklbw xmm8,xmm15
 		punpckhbw xmm10,xmm15
 
-		movdqu xmm7,xmm8
-		movdqu xmm9,xmm10
+		movdqu xmm9,xmm8
+		movdqu xmm11,xmm10
 
-		punpcklwd xmm7,xmm15 ;SUMA COL 4
-		punpckhwd xmm8,xmm15 ;SUMA COL 5
-		punpcklwd xmm9,xmm15 ;SUMA COL 6
-		punpckhwd xmm10,xmm15 ;SUMA COL 7
+		punpcklwd xmm8,xmm15 ;SUMA COL 4
+		punpckhwd xmm9,xmm15 ;SUMA COL 5
+		punpcklwd xmm10,xmm15 ;SUMA COL 6
+		punpckhwd xmm11,xmm15 ;SUMA COL 7
+
 
  
 		;Pixel 0(col0 a col4)
-		pxor xmm11,xmm11
-		paddd xmm11,xmm3
-		paddd xmm11,xmm4
-		paddd xmm11,xmm5
-		paddd xmm11,xmm6
-		paddd xmm11,xmm7
+		pxor xmm13,xmm13
+		paddd xmm13,xmm4
+		paddd xmm13,xmm5
+		paddd xmm13,xmm6
+		paddd xmm13,xmm7
+		paddd xmm13,xmm8
 
 		movdqu xmm12,xmm0
-		pmuldq xmm12,xmm11
+		pmuldq xmm12,xmm13
 
-		movdqu xmm11,[Alpha]
-		pmuldq xmm12,xmm11
+		movd xmm13,r10d;meto el alpha
+		pmuldq xmm12,xmm13
 		cvtdq2ps xmm12,xmm12
-		movdqu xmm11,[maximo]
-		mulps xmm12,xmm11
+		movdqu xmm13,[maximo]
+		mulps xmm12,xmm13
 		cvtps2dq xmm12,xmm12
 		paddq xmm0,xmm12
 
 		;Pixel 1(col1 a col5)
-		pxor xmm11,xmm11
-		paddd xmm11,xmm4
-		paddd xmm11,xmm5
-		paddd xmm11,xmm6
-		paddd xmm11,xmm7
-		paddd xmm11,xmm8
+		pxor xmm13,xmm13
+		paddd xmm13,xmm5
+		paddd xmm13,xmm6
+		paddd xmm13,xmm7
+		paddd xmm13,xmm8
+		paddd xmm13,xmm9
 
 		movdqu xmm12,xmm1
-		pmuldq xmm12,xmm11
+		pmuldq xmm12,xmm13
 
-		movdqu xmm11,[Alpha]
-		pmuldq xmm12,xmm11
+		movd xmm13,r10d;meto el alpha
+		pmuldq xmm12,xmm13
 		cvtdq2ps xmm12,xmm12
-		movdqu xmm11,[maximo]
-		mulps xmm12,xmm11
+		movdqu xmm13,[maximo]
+		mulps xmm12,xmm13
 		cvtps2dq xmm12,xmm12
 		paddq xmm1,xmm12
 
 		;Pixel 2
-		pxor xmm11,xmm11
-		paddd xmm11,xmm5
-		paddd xmm11,xmm6
-		paddd xmm11,xmm7
-		paddd xmm11,xmm8
-		paddd xmm11,xmm9
+		pxor xmm13,xmm13
+		paddd xmm13,xmm6
+		paddd xmm13,xmm7
+		paddd xmm13,xmm8
+		paddd xmm13,xmm9
+		paddd xmm13,xmm10
 
 		movdqu xmm12,xmm2
-		pmuldq xmm12,xmm11
+		pmuldq xmm12,xmm13
 
-		movdqu xmm11,[Alpha]
-		pmuldq xmm12,xmm11
+		movd xmm13,r10d;meto el alpha
+		pmuldq xmm12,xmm13
 		cvtdq2ps xmm12,xmm12
-		movdqu xmm11,[maximo]
-		mulps xmm12,xmm11
+		movdqu xmm13,[maximo]
+		mulps xmm12,xmm13
 		cvtps2dq xmm12,xmm12
 		paddq xmm2,xmm12
 
 		;Pixel 3
-		pxor xmm11,xmm11
-		paddd xmm11,xmm6
-		paddd xmm11,xmm7
-		paddd xmm11,xmm8
-		paddd xmm11,xmm9
-		paddd xmm11,xmm10
+		pxor xmm13,xmm13
+		paddd xmm13,xmm7
+		paddd xmm13,xmm8
+		paddd xmm13,xmm9
+		paddd xmm13,xmm10
+		paddd xmm13,xmm11
 
 		movdqu xmm12,xmm3
-		pmuldq xmm12,xmm11
+		pmuldq xmm12,xmm13
 
-		movdqu xmm11,[Alpha]
-		pmuldq xmm12,xmm11
+		movd xmm13,r10d;meto el alpha
+		pmuldq xmm12,xmm13
 		cvtdq2ps xmm12,xmm12
-		movdqu xmm11,[maximo]
-		mulps xmm12,xmm11
+		movdqu xmm13,[maximo]
+		mulps xmm12,xmm13
 		cvtps2dq xmm12,xmm12
 		paddq xmm3,xmm12
+
 
 
 		packusdw xmm0,xmm1
