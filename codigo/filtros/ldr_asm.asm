@@ -86,33 +86,58 @@ pxor xmm14,xmm14
 
 			;levanto esos 4 del source
 			movdqu xmm0,[rdi+r9]
-			movdqu xmm1,xmm0
-
-			punpcklbw xmm0,xmm15 ;[ a1 | r1 | g1 | b1 || a0 | r0 | g0 | b0 ]
-			punpckhbw xmm1,xmm15 ;[ a3 | r3 | g3 | b3 || a2 | r2 | g2 | b2 ]
-
+			movdqu xmm1,xmm0 ;[a r g b a r g b a r g b a r g b]
 			movdqu xmm2,xmm0
-			movdqu xmm3,xmm1
+			pslld xmm1,24
+			psrld xmm1,24 ;[000b 000b 000b 000b]
 
-			psrlq xmm2,16
-			psrlq xmm3,16
+			pslld xmm2,8
+			psrld xmm2,24 ;[000r000r000r000r]
 
+			pslld xmm0,16
+			psrld xmm0,24
+
+			paddw xmm0,xmm1
 			paddw xmm0,xmm2
-			paddw xmm1,xmm3
 
-			psrlq xmm2,16
-			psrlq xmm3,16
 
-			paddw xmm0,xmm2;en cada B tengo la suma
-			paddw xmm1,xmm3;en cada B tengo la suma
-			;[ a1 | f | f | s || a0 | f | f | s ]
-			;					 11   10  01  00	
-			pshuflw xmm0,xmm0, 11000000b ;meti la suma
-			pshufhw xmm0,xmm0, 11000000b
-			pshuflw xmm1,xmm1, 11000000b ;meti la suma
-			pshufhw xmm1,xmm1, 11000000b
+			; punpcklbd xmm0,xmm15 ;[ a1 | r1 | g1 | b1 || a0 | r0 | g0 | b0 ]
+			; punpckhbw xmm1,xmm15 ;[ a3 | r3 | g3 | b3 || a2 | r2 | g2 | b2 ]
 
-			packuswb xmm0,xmm1 ;
+			; movdqu xmm2,xmm0
+			; movdqu xmm3,xmm1
+
+			; psrlq xmm2,16
+			; psrlq xmm3,16
+
+			; paddw xmm0,xmm2
+			; paddw xmm1,xmm3
+
+			; psrlq xmm2,16
+			; psrlq xmm3,16
+
+			; paddw xmm0,xmm2;en cada B tengo la suma
+			; paddw xmm1,xmm3;en cada B tengo la suma
+			; ;[ a1 | f | f | s || a0 | f | f | s ]
+			; ;					 11   10  01  00	
+			; pshuflw xmm0,xmm0, 11000000b ;meti la suma
+			; pshufhw xmm0,xmm0, 11000000b
+			; pshuflw xmm1,xmm1, 11000000b ;meti la suma
+			; pshufhw xmm1,xmm1, 11000000b ; [A S S S | A S S S]
+
+			; ; psllq xmm1,16
+			; ; psllq xmm1,16
+			; ; psllq xmm1,16
+			; ; psllq xmm0,16
+			; ; psllq xmm0,16
+			; ; psllq xmm0,16
+			; ; psrlq xmm1,16
+			; ; psrlq xmm0,16
+			; ; psrlq xmm0,16
+			; ; psrlq xmm0,16
+
+			; ; paddd xmm0,xmm1
+			; packuswb xmm0,xmm1 ;
 
 
 			cmp r11,-2
@@ -124,12 +149,12 @@ pxor xmm14,xmm14
 			;[s3|s2|s1|s0]+
 			;[sp3|sp2|sp1|sp0]
 
-			paddb xmm13,xmm0
+			paddd xmm13,xmm0
 			add r11,4
 
 			.sonDeLasSegundas4Cols
 
-			paddb xmm14,xmm0
+			paddd xmm14,xmm0
 			add r11,4
 jmp .cicloVecinosInterior
 
@@ -267,6 +292,8 @@ jmp .cicloVecinosInterior
 
 		movdqu[rsi+r9],xmm0
 		jmp .volverACiclo
+
+
 	.finVecInterior:
 	inc r8
 	mov r11,-2
@@ -294,6 +321,4 @@ pop r13
 pop r12
 pop rbp
 ret
- 
-	
 	
