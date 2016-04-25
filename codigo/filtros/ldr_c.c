@@ -27,9 +27,8 @@ void ldr_c    (
             bgra_t *p_d = (bgra_t*) &dst_matrix[i][j * 4];
             bgra_t *p_s = (bgra_t*) &src_matrix[i][j * 4];
             *p_d = *p_s;
-            if(i<2 || j<2 || i+2 >= filas || j+2 >= cols ){
+            if(!(i<2 || j<2 || i+2 >= filas || j+2 >= cols) ){
 
-            }else{
                 double maxi =5 * 5 * 255 * 3 * 255;
                 double sumaRij=0;
                 double sumaGij=0;

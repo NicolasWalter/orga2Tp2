@@ -136,7 +136,7 @@ pxor xmm14,xmm14	;Acul Col 8
 
 
 
-			cmp r11,0
+			cmp r11,-2
 			je .sonDeLasPrimeras4Cols
 			jmp .sonDeLasSegundas4Cols
 
@@ -205,35 +205,81 @@ pxor xmm14,xmm14	;Acul Col 8
 		punpckhwd xmm3,xmm15 ; p3----> col3 4 5 6 7
 		;psrld xmm14,16
 
-		movdqu xmm7,xmm13;suma primeras 4
-		movdqu xmm8,xmm14; suma otras 4  [7 6 5 4]
+		; movdqu xmm7,xmm13;suma primeras 4
+		; movdqu xmm8,xmm14; suma otras 4  [7 6 5 4]
 
 
-		;Laburo con el pixel 0
-		movdqu xmm9,xmm7;copia de la copia :O
-		pshufd xmm9,xmm9,11111001b
-		paddd xmm7,xmm9
-		pshufd xmm9,xmm9,11111101b
-		paddd xmm7,xmm9
-		pshufd xmm7,xmm7,00000000b;tengo la suma 4 veces
+		; ;Laburo con el pixel 0
+		; movdqu xmm9,xmm7;copia de la copia :O
+		; pshufd xmm9,xmm9,11111001b
+		; paddd xmm7,xmm9
+		; pshufd xmm9,xmm9,11111101b
+		; paddd xmm7,xmm9
+		; pshufd xmm7,xmm7,00000000b;tengo la suma 4 veces
 
-		pshufd xmm8,xmm8,00000000b
+		; pshufd xmm8,xmm8,00000000b
 
-		paddd xmm7,xmm8
+		; paddd xmm7,xmm8
+
+		; movdqu xmm9,xmm0
+		; pmuldq xmm9,xmm7
+
+		; movdqu xmm8,[Alpha]
+		; pmuldq xmm9,xmm8
+		; cvtdq2ps xmm9,xmm9
+		; movdqu xmm8,[maximo]
+		; mulps xmm9,xmm8
+		; cvtps2dq xmm9,xmm9
+		; paddq xmm0,xmm9
+
+		;Laburo con el pixel 1
+
+		;SEPARO LAS SUMAS XMM4 A XMM11
+
+		movdqu xmm4,xmm13
+		movdqu xmm6,xmm13
+		punpcklbw xmm4,xmm15
+		punpckhbw xmm6,xmm15
+
+		movdqu xmm3,xmm4
+		movdqu xmm5,xmm6
+
+		punpcklwd xmm3,xmm15 ;SUMA COL 0
+		punpckhwd xmm4,xmm15 ;SUMA COL 1
+		punpcklwd xmm5,xmm15 ;SUMA COL 2
+		punpckhwd xmm6,xmm15 ;SUMA COL 3
+
+		movdqu xmm8,xmm14
+		movdqu xmm10,xmm14
+		punpcklbw xmm8,xmm15
+		punpckhbw xmm10,xmm15
+
+		movdqu xmm7,xmm8
+		movdqu xmm9,xmm10
+
+		punpcklwd xmm7,xmm15 ;SUMA COL 4
+		punpckhwd xmm8,xmm15 ;SUMA COL 5
+		punpcklwd xmm9,xmm15 ;SUMA COL 6
+		punpckhwd xmm10,xmm15 ;SUMA COL 7
+
+ 
+		;Pixel 0(col0 a col4)
+		paddd xmm11,xmm3
+		paddd xmm11,xmm4
+		paddd xmm11,xmm5
+		paddd xmm11,xmm6
+		paddd xmm11,xmm7
 
 		movdqu xmm9,xmm0
-		pmuldq xmm9,xmm7
+		pmuldq xmm9,xmm11
 
-		movdqu xmm8,[Alpha]
+		movdqu xmm12,[Alpha]
 		pmuldq xmm9,xmm8
 		cvtdq2ps xmm9,xmm9
 		movdqu xmm8,[maximo]
 		mulps xmm9,xmm8
 		cvtps2dq xmm9,xmm9
 		paddq xmm0,xmm9
-
-		;Laburo con el pixel 1
-
 
 
 
@@ -320,6 +366,8 @@ pxor xmm14,xmm14	;Acul Col 8
 	.volverACiclo:
 	;inc r13
 	add r13,4
+	pxor xmm14,xmm14
+	pxor xmm13,xmm13
 	jmp .ciclo
 
 	.cambioFila:
