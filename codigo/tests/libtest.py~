@@ -16,7 +16,7 @@ DIFFFLAGS = ""
 corridas = [
     {'filtro': 'cropflip', 'tolerancia': 0, 'params': '128 64 16 32'},
     {'filtro': 'sepia', 'tolerancia': 5, 'params': ''},
-    {'filtro': 'ldr', 'tolerancia': 10, 'params': '-- -100'}
+    {'filtro': 'ldr', 'tolerancia': 10, 'params': '100'}
 ]
 
 

@@ -5,7 +5,7 @@ global ldr_asm
 
 section .data
 ;!!!!!!!!!!!!!!!!!!!!!!!!!!! VER SI TIENEN QUE SER DD DW O QUE MIERDA
-maximo: DD 4876875 , 4876875 , 4876875 , 4876875  
+maximo: DD 4876875.0 , 4876875.0 , 4876875.0 , 4876875.0  
 section .text
 ;void ldr_asm    (
 	;unsigned char *src,		RDI
@@ -194,8 +194,9 @@ pxor xmm14,xmm14
 		paddd xmm12,xmm14
 
 		movd xmm13,r10d;meto el alpha
-		pshufd xmm13, xmm13, 00000000b;meto el alpha
-		pshufd xmm13, xmm13, 00000000b
+		;pshufd xmm13, xmm13, 00000000b;meto el alpha
+		pshufd xmm13, xmm13, 11000000b
+		cvtdq2ps xmm13,xmm13
 		cvtdq2ps xmm12,xmm12
 		mulps xmm12, xmm13
 		movdqu xmm13,[maximo]
@@ -220,7 +221,8 @@ pxor xmm14,xmm14
 		pshufd xmm14, xmm14, 00111001b
 		paddd xmm12,xmm14
 			movd xmm13,r10d;meto el alpha
-		pshufd xmm13, xmm13, 00000000b;meto el alpha
+		pshufd xmm13, xmm13, 11000000b;meto el alpha
+		cvtdq2ps xmm13,xmm13
 		cvtdq2ps xmm12,xmm12
 		mulps xmm12, xmm13
 		movdqu xmm13,[maximo]
@@ -247,7 +249,8 @@ pxor xmm14,xmm14
 		paddd xmm12,xmm14
 
 		movd xmm13,r10d;meto el alpha
-		pshufd xmm13, xmm13, 00000000b;meto el alpha
+		pshufd xmm13, xmm13, 11000000b;meto el alpha
+		cvtdq2ps xmm13,xmm13
 		cvtdq2ps xmm12,xmm12
 		mulps xmm12, xmm13
 		movdqu xmm13,[maximo]
@@ -274,7 +277,8 @@ pxor xmm14,xmm14
 		paddd xmm12,xmm14
 
 		movd xmm13,r10d;meto el alpha
-		pshufd xmm13, xmm13, 00000000b;meto el alpha
+		pshufd xmm13, xmm13, 11000000b;meto el alpha
+		cvtdq2ps xmm13,xmm13
 		cvtdq2ps xmm12,xmm12
 		mulps xmm12, xmm13
 		movdqu xmm13,[maximo]
