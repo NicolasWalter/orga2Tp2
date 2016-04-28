@@ -13,9 +13,9 @@ make
 	 
 
 	 	#printf '%s ' 'negra' >> LDRNEGRA 
-	  ./build/tp2 ldr -i asm negra.bmp sepia -t 1500 >>Sepia
-	  ./build/tp2 ldr -i asm ./img/lena.512x512.bmp sepia -t 1500 >>Sepia
-	  ./build/tp2 ldr -i asm blanca.bmp sepia -t 1500 >>Sepia
+	  ./build/tp2 ldr -i asm negra.bmp sepia -t 100 >>SepiaNegra
+	  ./build/tp2 ldr -i asm ./img/lena.512x512.bmp sepia -t 100 >>SepiaLena
+	  ./build/tp2 ldr -i asm blanca.bmp sepia -t 100 >>SepiaBlanca
 
 
-	  python GraficarBarras.py Sepia
+	 # python GraficarBarras.py Sepia

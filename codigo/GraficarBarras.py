@@ -9,9 +9,9 @@ import sys
 # y = [row[1] for row in arr]
 
 w=[1, 2, 3]
-stN = np.genfromtxt("DesvioNegraLdr")
-stL = np.genfromtxt("DesvioLenaLdr")
-stB = np.genfromtxt("DesvioBlancaLdr")
+stN= np.genfromtxt("DesvioNegraLdr")
+stL= np.genfromtxt("DesvioLenaLdr")
+stB =np.genfromtxt("DesvioBlancaLdr")
 #np.std(x)
 standards =[np.std(stN), np.std(stL), np.std(stB)]
 
