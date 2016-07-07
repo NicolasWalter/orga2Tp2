@@ -1,0 +1,87 @@
+% This file was created by matplotlib2tikz v0.5.7.
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
+\begin{tikzpicture}
+
+\definecolor{color0}{rgb}{0,1,1}
+
+\begin{axis}[
+title={SEPIA},
+xlabel={Cantidad de pixeles de la imagen},
+ylabel={Cantidad de ciclos de Clock},
+xmin=16384, xmax=4194304,
+ymin=262144, ymax=268435456,
+xmode=log,
+ymode=log,
+axis on top,
+legend entries={{GCCMarchNativeO0},{ICCxHostO0},{GCCO0},{ICCO0}},
+legend style={at={(0.03,0.97)}, anchor=north west},
+legend cell align={left}
+]
+\addplot [thick, red]
+table {%
+16384 641292.5
+65536 2746443.75
+147456 6182926.5
+262144 11041664
+409600 17376420
+589824 24806950
+802816 33232692
+1048576 43351016
+1327104 55076928
+1638400 67974368
+1982464 81757832
+2359296 104853072
+};
+\addplot [thick, green!50.0!black]
+table {%
+16384 1038644.062
+65536 4118076.5
+147456 9306735
+262144 16544464
+409600 25664456
+589824 36851144
+802816 50134076
+1048576 65690420
+1327104 82930112
+1638400 102585944
+1982464 123935424
+2359296 147181120
+};
+\addplot [thick, blue]
+table {%
+16384 515229.5
+65536 2204244.25
+147456 4897428
+262144 8647256
+409600 13378931
+589824 19348472
+802816 26161970
+1048576 34256424
+1327104 43615464
+1638400 53210384
+1982464 64569488
+2359296 76402792
+};
+\addplot [thick, color0]
+table {%
+16384 1037500.5
+65536 4124183.75
+147456 9277420
+262144 16663379
+409600 25649968
+589824 36862156
+802816 50385732
+1048576 65637784
+1327104 82887688
+1638400 102285488
+1982464 124156504
+2359296 147338576
+};
+\end{axis}
+
+\end{tikzpicture}

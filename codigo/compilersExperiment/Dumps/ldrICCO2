@@ -1,0 +1,452 @@
+
+ldr_c.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <ldr_c>:
+   0:	45 33 d2             	xor    r10d,r10d
+   3:	4d 63 c0             	movsxd r8,r8d
+   6:	85 c9                	test   ecx,ecx
+   8:	4d 63 c9             	movsxd r9,r9d
+   b:	0f 8e 8b 07 00 00    	jle    79c <ldr_c+0x79c>
+  11:	44 8b 5c 24 08       	mov    r11d,DWORD PTR [rsp+0x8]
+  16:	33 c0                	xor    eax,eax
+  18:	85 d2                	test   edx,edx
+  1a:	0f 8e a1 07 00 00    	jle    7c1 <ldr_c+0x7c1>
+  20:	89 4c 24 f8          	mov    DWORD PTR [rsp-0x8],ecx
+  24:	4c 89 64 24 f0       	mov    QWORD PTR [rsp-0x10],r12
+  29:	4c 89 6c 24 e8       	mov    QWORD PTR [rsp-0x18],r13
+  2e:	4c 89 74 24 e0       	mov    QWORD PTR [rsp-0x20],r14
+  33:	4c 89 7c 24 d8       	mov    QWORD PTR [rsp-0x28],r15
+  38:	48 89 5c 24 d0       	mov    QWORD PTR [rsp-0x30],rbx
+  3d:	48 89 6c 24 c8       	mov    QWORD PTR [rsp-0x38],rbp
+  42:	4d 89 cd             	mov    r13,r9
+  45:	4d 63 e2             	movsxd r12,r10d
+  48:	4d 0f af ec          	imul   r13,r12
+  4c:	4d 0f af e0          	imul   r12,r8
+  50:	4c 63 f0             	movsxd r14,eax
+  53:	4c 03 ee             	add    r13,rsi
+  56:	41 83 fa 02          	cmp    r10d,0x2
+  5a:	4e 8d 1c 27          	lea    r11,[rdi+r12*1]
+  5e:	43 8b 0c b3          	mov    ecx,DWORD PTR [r11+r14*4]
+  62:	43 89 4c b5 00       	mov    DWORD PTR [r13+r14*4+0x0],ecx
+  67:	0f 8c e2 06 00 00    	jl     74f <ldr_c+0x74f>
+  6d:	83 f8 02             	cmp    eax,0x2
+  70:	0f 8c ce 06 00 00    	jl     744 <ldr_c+0x744>
+  76:	41 8d 4a 02          	lea    ecx,[r10+0x2]
+  7a:	3b 4c 24 f8          	cmp    ecx,DWORD PTR [rsp-0x8]
+  7e:	0f 8d b5 06 00 00    	jge    739 <ldr_c+0x739>
+  84:	8d 48 02             	lea    ecx,[rax+0x2]
+  87:	3b d1                	cmp    edx,ecx
+  89:	0f 8e 9b 06 00 00    	jle    72a <ldr_c+0x72a>
+  8f:	4c 89 c3             	mov    rbx,r8
+  92:	4b 8d 0c 00          	lea    rcx,[r8+r8*1]
+  96:	48 f7 d9             	neg    rcx
+  99:	48 f7 db             	neg    rbx
+  9c:	48 03 cf             	add    rcx,rdi
+  9f:	66 0f ef ed          	pxor   xmm5,xmm5
+  a3:	49 03 cc             	add    rcx,r12
+  a6:	66 0f ef f6          	pxor   xmm6,xmm6
+  aa:	47 0f b6 7c b3 02    	movzx  r15d,BYTE PTR [r11+r14*4+0x2]
+  b0:	48 03 df             	add    rbx,rdi
+  b3:	43 0f b6 6c b3 01    	movzx  ebp,BYTE PTR [r11+r14*4+0x1]
+  b9:	66 0f ef db          	pxor   xmm3,xmm3
+  bd:	f3 41 0f 2a ef       	cvtsi2ss xmm5,r15d
+  c2:	f3 0f 2a f5          	cvtsi2ss xmm6,ebp
+  c6:	66 0f ef ff          	pxor   xmm7,xmm7
+  ca:	4a 8d 2c 07          	lea    rbp,[rdi+r8*1]
+  ce:	49 03 dc             	add    rbx,r12
+  d1:	4e 8d 3c 47          	lea    r15,[rdi+r8*2]
+  d5:	49 03 ec             	add    rbp,r12
+  d8:	4d 03 e7             	add    r12,r15
+  db:	46 0f b6 7c b1 fa    	movzx  r15d,BYTE PTR [rcx+r14*4-0x6]
+  e1:	66 45 0f ef c0       	pxor   xmm8,xmm8
+  e6:	f3 41 0f 2a df       	cvtsi2ss xmm3,r15d
+  eb:	46 0f b6 7c b1 fe    	movzx  r15d,BYTE PTR [rcx+r14*4-0x2]
+  f1:	66 45 0f ef c9       	pxor   xmm9,xmm9
+  f6:	f3 41 0f 2a ff       	cvtsi2ss xmm7,r15d
+  fb:	46 0f b6 7c b1 02    	movzx  r15d,BYTE PTR [rcx+r14*4+0x2]
+ 101:	66 45 0f ef d2       	pxor   xmm10,xmm10
+ 106:	f3 45 0f 2a c7       	cvtsi2ss xmm8,r15d
+ 10b:	f3 0f 58 df          	addss  xmm3,xmm7
+ 10f:	46 0f b6 7c b1 06    	movzx  r15d,BYTE PTR [rcx+r14*4+0x6]
+ 115:	66 45 0f ef db       	pxor   xmm11,xmm11
+ 11a:	f3 45 0f 2a cf       	cvtsi2ss xmm9,r15d
+ 11f:	f3 41 0f 58 d8       	addss  xmm3,xmm8
+ 124:	46 0f b6 7c b1 0a    	movzx  r15d,BYTE PTR [rcx+r14*4+0xa]
+ 12a:	66 45 0f ef e4       	pxor   xmm12,xmm12
+ 12f:	f3 45 0f 2a d7       	cvtsi2ss xmm10,r15d
+ 134:	f3 41 0f 58 d9       	addss  xmm3,xmm9
+ 139:	46 0f b6 7c b3 fa    	movzx  r15d,BYTE PTR [rbx+r14*4-0x6]
+ 13f:	66 45 0f ef ed       	pxor   xmm13,xmm13
+ 144:	f3 45 0f 2a df       	cvtsi2ss xmm11,r15d
+ 149:	f3 41 0f 58 da       	addss  xmm3,xmm10
+ 14e:	46 0f b6 7c b3 fe    	movzx  r15d,BYTE PTR [rbx+r14*4-0x2]
+ 154:	66 45 0f ef f6       	pxor   xmm14,xmm14
+ 159:	f3 45 0f 2a e7       	cvtsi2ss xmm12,r15d
+ 15e:	f3 41 0f 58 db       	addss  xmm3,xmm11
+ 163:	46 0f b6 7c b3 02    	movzx  r15d,BYTE PTR [rbx+r14*4+0x2]
+ 169:	66 45 0f ef ff       	pxor   xmm15,xmm15
+ 16e:	f3 45 0f 2a ef       	cvtsi2ss xmm13,r15d
+ 173:	f3 41 0f 58 dc       	addss  xmm3,xmm12
+ 178:	46 0f b6 7c b3 06    	movzx  r15d,BYTE PTR [rbx+r14*4+0x6]
+ 17e:	66 0f ef c0          	pxor   xmm0,xmm0
+ 182:	f3 45 0f 2a f7       	cvtsi2ss xmm14,r15d
+ 187:	f3 41 0f 58 dd       	addss  xmm3,xmm13
+ 18c:	46 0f b6 7c b3 0a    	movzx  r15d,BYTE PTR [rbx+r14*4+0xa]
+ 192:	66 0f ef c9          	pxor   xmm1,xmm1
+ 196:	f3 45 0f 2a ff       	cvtsi2ss xmm15,r15d
+ 19b:	f3 41 0f 58 de       	addss  xmm3,xmm14
+ 1a0:	47 0f b6 7c b3 fa    	movzx  r15d,BYTE PTR [r11+r14*4-0x6]
+ 1a6:	66 0f ef d2          	pxor   xmm2,xmm2
+ 1aa:	f3 41 0f 2a c7       	cvtsi2ss xmm0,r15d
+ 1af:	f3 41 0f 58 df       	addss  xmm3,xmm15
+ 1b4:	47 0f b6 7c b3 fe    	movzx  r15d,BYTE PTR [r11+r14*4-0x2]
+ 1ba:	66 0f ef ff          	pxor   xmm7,xmm7
+ 1be:	f3 41 0f 2a cf       	cvtsi2ss xmm1,r15d
+ 1c3:	f3 0f 58 d8          	addss  xmm3,xmm0
+ 1c7:	47 0f b6 7c b3 06    	movzx  r15d,BYTE PTR [r11+r14*4+0x6]
+ 1cd:	66 45 0f ef c0       	pxor   xmm8,xmm8
+ 1d2:	f3 41 0f 2a d7       	cvtsi2ss xmm2,r15d
+ 1d7:	f3 0f 58 d9          	addss  xmm3,xmm1
+ 1db:	47 0f b6 7c b3 0a    	movzx  r15d,BYTE PTR [r11+r14*4+0xa]
+ 1e1:	66 45 0f ef c9       	pxor   xmm9,xmm9
+ 1e6:	f3 41 0f 2a ff       	cvtsi2ss xmm7,r15d
+ 1eb:	f3 0f 58 dd          	addss  xmm3,xmm5
+ 1ef:	66 45 0f ef d2       	pxor   xmm10,xmm10
+ 1f4:	66 45 0f ef db       	pxor   xmm11,xmm11
+ 1f9:	46 0f b6 7c b5 fa    	movzx  r15d,BYTE PTR [rbp+r14*4-0x6]
+ 1ff:	66 45 0f ef e4       	pxor   xmm12,xmm12
+ 204:	f3 45 0f 2a c7       	cvtsi2ss xmm8,r15d
+ 209:	f3 0f 58 da          	addss  xmm3,xmm2
+ 20d:	46 0f b6 7c b5 fe    	movzx  r15d,BYTE PTR [rbp+r14*4-0x2]
+ 213:	66 45 0f ef ed       	pxor   xmm13,xmm13
+ 218:	f3 45 0f 2a cf       	cvtsi2ss xmm9,r15d
+ 21d:	f3 0f 58 df          	addss  xmm3,xmm7
+ 221:	46 0f b6 7c b5 02    	movzx  r15d,BYTE PTR [rbp+r14*4+0x2]
+ 227:	66 45 0f ef f6       	pxor   xmm14,xmm14
+ 22c:	f3 45 0f 2a d7       	cvtsi2ss xmm10,r15d
+ 231:	f3 41 0f 58 d8       	addss  xmm3,xmm8
+ 236:	46 0f b6 7c b5 06    	movzx  r15d,BYTE PTR [rbp+r14*4+0x6]
+ 23c:	66 45 0f ef ff       	pxor   xmm15,xmm15
+ 241:	f3 45 0f 2a df       	cvtsi2ss xmm11,r15d
+ 246:	f3 41 0f 58 d9       	addss  xmm3,xmm9
+ 24b:	46 0f b6 7c b5 0a    	movzx  r15d,BYTE PTR [rbp+r14*4+0xa]
+ 251:	66 0f ef c0          	pxor   xmm0,xmm0
+ 255:	f3 45 0f 2a e7       	cvtsi2ss xmm12,r15d
+ 25a:	f3 41 0f 58 da       	addss  xmm3,xmm10
+ 25f:	47 0f b6 7c b4 fa    	movzx  r15d,BYTE PTR [r12+r14*4-0x6]
+ 265:	66 0f ef c9          	pxor   xmm1,xmm1
+ 269:	f3 45 0f 2a ef       	cvtsi2ss xmm13,r15d
+ 26e:	f3 41 0f 58 db       	addss  xmm3,xmm11
+ 273:	47 0f b6 7c b4 fe    	movzx  r15d,BYTE PTR [r12+r14*4-0x2]
+ 279:	66 0f ef d2          	pxor   xmm2,xmm2
+ 27d:	f3 45 0f 2a f7       	cvtsi2ss xmm14,r15d
+ 282:	f3 41 0f 58 dc       	addss  xmm3,xmm12
+ 287:	47 0f b6 7c b4 02    	movzx  r15d,BYTE PTR [r12+r14*4+0x2]
+ 28d:	66 0f ef ff          	pxor   xmm7,xmm7
+ 291:	f3 45 0f 2a ff       	cvtsi2ss xmm15,r15d
+ 296:	f3 41 0f 58 dd       	addss  xmm3,xmm13
+ 29b:	47 0f b6 7c b4 06    	movzx  r15d,BYTE PTR [r12+r14*4+0x6]
+ 2a1:	66 45 0f ef c0       	pxor   xmm8,xmm8
+ 2a6:	f3 41 0f 2a c7       	cvtsi2ss xmm0,r15d
+ 2ab:	f3 41 0f 58 de       	addss  xmm3,xmm14
+ 2b0:	47 0f b6 7c b4 0a    	movzx  r15d,BYTE PTR [r12+r14*4+0xa]
+ 2b6:	66 45 0f ef c9       	pxor   xmm9,xmm9
+ 2bb:	f3 41 0f 2a cf       	cvtsi2ss xmm1,r15d
+ 2c0:	f3 41 0f 58 df       	addss  xmm3,xmm15
+ 2c5:	46 0f b6 7c b1 f9    	movzx  r15d,BYTE PTR [rcx+r14*4-0x7]
+ 2cb:	66 45 0f ef d2       	pxor   xmm10,xmm10
+ 2d0:	f3 41 0f 2a d7       	cvtsi2ss xmm2,r15d
+ 2d5:	f3 0f 58 d8          	addss  xmm3,xmm0
+ 2d9:	46 0f b6 7c b1 fd    	movzx  r15d,BYTE PTR [rcx+r14*4-0x3]
+ 2df:	66 45 0f ef db       	pxor   xmm11,xmm11
+ 2e4:	f3 41 0f 2a ff       	cvtsi2ss xmm7,r15d
+ 2e9:	f3 0f 58 d9          	addss  xmm3,xmm1
+ 2ed:	f3 0f 58 d7          	addss  xmm2,xmm7
+ 2f1:	46 0f b6 7c b1 01    	movzx  r15d,BYTE PTR [rcx+r14*4+0x1]
+ 2f7:	66 45 0f ef e4       	pxor   xmm12,xmm12
+ 2fc:	f3 45 0f 2a c7       	cvtsi2ss xmm8,r15d
+ 301:	46 0f b6 7c b1 05    	movzx  r15d,BYTE PTR [rcx+r14*4+0x5]
+ 307:	66 45 0f ef ed       	pxor   xmm13,xmm13
+ 30c:	f3 45 0f 2a cf       	cvtsi2ss xmm9,r15d
+ 311:	f3 41 0f 58 d0       	addss  xmm2,xmm8
+ 316:	46 0f b6 7c b1 09    	movzx  r15d,BYTE PTR [rcx+r14*4+0x9]
+ 31c:	66 45 0f ef f6       	pxor   xmm14,xmm14
+ 321:	f3 45 0f 2a d7       	cvtsi2ss xmm10,r15d
+ 326:	f3 41 0f 58 d1       	addss  xmm2,xmm9
+ 32b:	46 0f b6 7c b3 f9    	movzx  r15d,BYTE PTR [rbx+r14*4-0x7]
+ 331:	66 45 0f ef ff       	pxor   xmm15,xmm15
+ 336:	f3 45 0f 2a df       	cvtsi2ss xmm11,r15d
+ 33b:	f3 41 0f 58 d2       	addss  xmm2,xmm10
+ 340:	46 0f b6 7c b3 fd    	movzx  r15d,BYTE PTR [rbx+r14*4-0x3]
+ 346:	66 0f ef c0          	pxor   xmm0,xmm0
+ 34a:	f3 45 0f 2a e7       	cvtsi2ss xmm12,r15d
+ 34f:	f3 41 0f 58 d3       	addss  xmm2,xmm11
+ 354:	46 0f b6 7c b3 01    	movzx  r15d,BYTE PTR [rbx+r14*4+0x1]
+ 35a:	66 0f ef c9          	pxor   xmm1,xmm1
+ 35e:	f3 45 0f 2a ef       	cvtsi2ss xmm13,r15d
+ 363:	f3 41 0f 58 d4       	addss  xmm2,xmm12
+ 368:	46 0f b6 7c b3 05    	movzx  r15d,BYTE PTR [rbx+r14*4+0x5]
+ 36e:	66 0f ef ff          	pxor   xmm7,xmm7
+ 372:	f3 45 0f 2a f7       	cvtsi2ss xmm14,r15d
+ 377:	f3 41 0f 58 d5       	addss  xmm2,xmm13
+ 37c:	46 0f b6 7c b3 09    	movzx  r15d,BYTE PTR [rbx+r14*4+0x9]
+ 382:	66 45 0f ef c0       	pxor   xmm8,xmm8
+ 387:	f3 45 0f 2a ff       	cvtsi2ss xmm15,r15d
+ 38c:	f3 41 0f 58 d6       	addss  xmm2,xmm14
+ 391:	47 0f b6 7c b3 f9    	movzx  r15d,BYTE PTR [r11+r14*4-0x7]
+ 397:	66 45 0f ef c9       	pxor   xmm9,xmm9
+ 39c:	f3 41 0f 2a c7       	cvtsi2ss xmm0,r15d
+ 3a1:	f3 41 0f 58 d7       	addss  xmm2,xmm15
+ 3a6:	47 0f b6 7c b3 fd    	movzx  r15d,BYTE PTR [r11+r14*4-0x3]
+ 3ac:	66 45 0f ef d2       	pxor   xmm10,xmm10
+ 3b1:	f3 41 0f 2a cf       	cvtsi2ss xmm1,r15d
+ 3b6:	f3 0f 58 d0          	addss  xmm2,xmm0
+ 3ba:	47 0f b6 7c b3 05    	movzx  r15d,BYTE PTR [r11+r14*4+0x5]
+ 3c0:	66 45 0f ef db       	pxor   xmm11,xmm11
+ 3c5:	f3 41 0f 2a ff       	cvtsi2ss xmm7,r15d
+ 3ca:	f3 0f 58 d1          	addss  xmm2,xmm1
+ 3ce:	47 0f b6 7c b3 09    	movzx  r15d,BYTE PTR [r11+r14*4+0x9]
+ 3d4:	66 45 0f ef e4       	pxor   xmm12,xmm12
+ 3d9:	f3 45 0f 2a c7       	cvtsi2ss xmm8,r15d
+ 3de:	f3 0f 58 d6          	addss  xmm2,xmm6
+ 3e2:	46 0f b6 7c b5 f9    	movzx  r15d,BYTE PTR [rbp+r14*4-0x7]
+ 3e8:	66 45 0f ef ed       	pxor   xmm13,xmm13
+ 3ed:	f3 45 0f 2a cf       	cvtsi2ss xmm9,r15d
+ 3f2:	f3 0f 58 d7          	addss  xmm2,xmm7
+ 3f6:	46 0f b6 7c b5 fd    	movzx  r15d,BYTE PTR [rbp+r14*4-0x3]
+ 3fc:	66 45 0f ef f6       	pxor   xmm14,xmm14
+ 401:	f3 45 0f 2a d7       	cvtsi2ss xmm10,r15d
+ 406:	f3 41 0f 58 d0       	addss  xmm2,xmm8
+ 40b:	46 0f b6 7c b5 01    	movzx  r15d,BYTE PTR [rbp+r14*4+0x1]
+ 411:	66 45 0f ef ff       	pxor   xmm15,xmm15
+ 416:	f3 45 0f 2a df       	cvtsi2ss xmm11,r15d
+ 41b:	f3 41 0f 58 d1       	addss  xmm2,xmm9
+ 420:	46 0f b6 7c b5 05    	movzx  r15d,BYTE PTR [rbp+r14*4+0x5]
+ 426:	66 0f ef c0          	pxor   xmm0,xmm0
+ 42a:	f3 45 0f 2a e7       	cvtsi2ss xmm12,r15d
+ 42f:	f3 41 0f 58 d2       	addss  xmm2,xmm10
+ 434:	46 0f b6 7c b5 09    	movzx  r15d,BYTE PTR [rbp+r14*4+0x9]
+ 43a:	66 0f ef c9          	pxor   xmm1,xmm1
+ 43e:	f3 45 0f 2a ef       	cvtsi2ss xmm13,r15d
+ 443:	f3 41 0f 58 d3       	addss  xmm2,xmm11
+ 448:	47 0f b6 7c b4 f9    	movzx  r15d,BYTE PTR [r12+r14*4-0x7]
+ 44e:	66 0f ef ff          	pxor   xmm7,xmm7
+ 452:	f3 45 0f 2a f7       	cvtsi2ss xmm14,r15d
+ 457:	f3 41 0f 58 d4       	addss  xmm2,xmm12
+ 45c:	47 0f b6 7c b4 fd    	movzx  r15d,BYTE PTR [r12+r14*4-0x3]
+ 462:	66 45 0f ef c0       	pxor   xmm8,xmm8
+ 467:	f3 45 0f 2a ff       	cvtsi2ss xmm15,r15d
+ 46c:	f3 41 0f 58 d5       	addss  xmm2,xmm13
+ 471:	47 0f b6 7c b4 01    	movzx  r15d,BYTE PTR [r12+r14*4+0x1]
+ 477:	66 45 0f ef c9       	pxor   xmm9,xmm9
+ 47c:	f3 41 0f 2a c7       	cvtsi2ss xmm0,r15d
+ 481:	f3 41 0f 58 d6       	addss  xmm2,xmm14
+ 486:	47 0f b6 7c b4 05    	movzx  r15d,BYTE PTR [r12+r14*4+0x5]
+ 48c:	66 45 0f ef d2       	pxor   xmm10,xmm10
+ 491:	f3 41 0f 2a cf       	cvtsi2ss xmm1,r15d
+ 496:	f3 41 0f 58 d7       	addss  xmm2,xmm15
+ 49b:	47 0f b6 7c b4 09    	movzx  r15d,BYTE PTR [r12+r14*4+0x9]
+ 4a1:	66 45 0f ef db       	pxor   xmm11,xmm11
+ 4a6:	f3 41 0f 2a ff       	cvtsi2ss xmm7,r15d
+ 4ab:	f3 0f 58 d0          	addss  xmm2,xmm0
+ 4af:	46 0f b6 7c b1 f8    	movzx  r15d,BYTE PTR [rcx+r14*4-0x8]
+ 4b5:	66 0f ef c0          	pxor   xmm0,xmm0
+ 4b9:	66 45 0f ef e4       	pxor   xmm12,xmm12
+ 4be:	66 45 0f ef ed       	pxor   xmm13,xmm13
+ 4c3:	66 45 0f ef f6       	pxor   xmm14,xmm14
+ 4c8:	66 45 0f ef ff       	pxor   xmm15,xmm15
+ 4cd:	66 0f ef e4          	pxor   xmm4,xmm4
+ 4d1:	ff c0                	inc    eax
+ 4d3:	f3 0f 2a 64 24 08    	cvtsi2ss xmm4,DWORD PTR [rsp+0x8]
+ 4d9:	f3 0f 58 d1          	addss  xmm2,xmm1
+ 4dd:	66 0f ef c9          	pxor   xmm1,xmm1
+ 4e1:	3b c2                	cmp    eax,edx
+ 4e3:	f3 41 0f 2a cf       	cvtsi2ss xmm1,r15d
+ 4e8:	f3 0f 58 d7          	addss  xmm2,xmm7
+ 4ec:	46 0f b6 7c b1 fc    	movzx  r15d,BYTE PTR [rcx+r14*4-0x4]
+ 4f2:	66 0f ef ff          	pxor   xmm7,xmm7
+ 4f6:	f3 0f 58 da          	addss  xmm3,xmm2
+ 4fa:	66 0f ef d2          	pxor   xmm2,xmm2
+ 4fe:	f3 41 0f 2a d7       	cvtsi2ss xmm2,r15d
+ 503:	46 0f b6 3c b1       	movzx  r15d,BYTE PTR [rcx+r14*4]
+ 508:	f3 0f 58 ca          	addss  xmm1,xmm2
+ 50c:	f3 41 0f 2a c7       	cvtsi2ss xmm0,r15d
+ 511:	66 0f ef d2          	pxor   xmm2,xmm2
+ 515:	f3 0f 58 c8          	addss  xmm1,xmm0
+ 519:	46 0f b6 7c b1 04    	movzx  r15d,BYTE PTR [rcx+r14*4+0x4]
+ 51f:	66 0f ef c0          	pxor   xmm0,xmm0
+ 523:	f3 41 0f 2a d7       	cvtsi2ss xmm2,r15d
+ 528:	42 0f b6 4c b1 08    	movzx  ecx,BYTE PTR [rcx+r14*4+0x8]
+ 52e:	f3 0f 58 ca          	addss  xmm1,xmm2
+ 532:	f3 0f 2a f9          	cvtsi2ss xmm7,ecx
+ 536:	42 0f b6 4c b3 f8    	movzx  ecx,BYTE PTR [rbx+r14*4-0x8]
+ 53c:	66 0f ef d2          	pxor   xmm2,xmm2
+ 540:	f3 44 0f 2a c1       	cvtsi2ss xmm8,ecx
+ 545:	f3 0f 58 cf          	addss  xmm1,xmm7
+ 549:	46 0f b6 7c b3 fc    	movzx  r15d,BYTE PTR [rbx+r14*4-0x4]
+ 54f:	66 0f ef ff          	pxor   xmm7,xmm7
+ 553:	f3 45 0f 2a cf       	cvtsi2ss xmm9,r15d
+ 558:	f3 41 0f 58 c8       	addss  xmm1,xmm8
+ 55d:	42 0f b6 0c b3       	movzx  ecx,BYTE PTR [rbx+r14*4]
+ 562:	66 45 0f ef c0       	pxor   xmm8,xmm8
+ 567:	f3 44 0f 2a d1       	cvtsi2ss xmm10,ecx
+ 56c:	f3 41 0f 58 c9       	addss  xmm1,xmm9
+ 571:	46 0f b6 7c b3 04    	movzx  r15d,BYTE PTR [rbx+r14*4+0x4]
+ 577:	66 45 0f ef c9       	pxor   xmm9,xmm9
+ 57c:	f3 45 0f 2a df       	cvtsi2ss xmm11,r15d
+ 581:	f3 41 0f 58 ca       	addss  xmm1,xmm10
+ 586:	42 0f b6 5c b3 08    	movzx  ebx,BYTE PTR [rbx+r14*4+0x8]
+ 58c:	66 45 0f ef d2       	pxor   xmm10,xmm10
+ 591:	f3 44 0f 2a e3       	cvtsi2ss xmm12,ebx
+ 596:	f3 41 0f 58 cb       	addss  xmm1,xmm11
+ 59b:	43 0f b6 4c b3 f8    	movzx  ecx,BYTE PTR [r11+r14*4-0x8]
+ 5a1:	66 45 0f ef db       	pxor   xmm11,xmm11
+ 5a6:	f3 44 0f 2a e9       	cvtsi2ss xmm13,ecx
+ 5ab:	f3 41 0f 58 cc       	addss  xmm1,xmm12
+ 5b0:	43 0f b6 5c b3 fc    	movzx  ebx,BYTE PTR [r11+r14*4-0x4]
+ 5b6:	66 45 0f ef e4       	pxor   xmm12,xmm12
+ 5bb:	f3 44 0f 2a f3       	cvtsi2ss xmm14,ebx
+ 5c0:	f3 41 0f 58 cd       	addss  xmm1,xmm13
+ 5c5:	47 0f b6 3c b3       	movzx  r15d,BYTE PTR [r11+r14*4]
+ 5ca:	66 45 0f ef ed       	pxor   xmm13,xmm13
+ 5cf:	f3 41 0f 2a c7       	cvtsi2ss xmm0,r15d
+ 5d4:	f3 41 0f 58 ce       	addss  xmm1,xmm14
+ 5d9:	43 0f b6 4c b3 04    	movzx  ecx,BYTE PTR [r11+r14*4+0x4]
+ 5df:	66 45 0f ef f6       	pxor   xmm14,xmm14
+ 5e4:	f3 44 0f 2a f9       	cvtsi2ss xmm15,ecx
+ 5e9:	f3 0f 58 c8          	addss  xmm1,xmm0
+ 5ed:	47 0f b6 5c b3 08    	movzx  r11d,BYTE PTR [r11+r14*4+0x8]
+ 5f3:	f3 41 0f 58 cf       	addss  xmm1,xmm15
+ 5f8:	f3 41 0f 2a d3       	cvtsi2ss xmm2,r11d
+ 5fd:	42 0f b6 4c b5 f8    	movzx  ecx,BYTE PTR [rbp+r14*4-0x8]
+ 603:	66 45 0f ef ff       	pxor   xmm15,xmm15
+ 608:	f3 0f 2a f9          	cvtsi2ss xmm7,ecx
+ 60c:	f3 0f 58 ca          	addss  xmm1,xmm2
+ 610:	42 0f b6 5c b5 fc    	movzx  ebx,BYTE PTR [rbp+r14*4-0x4]
+ 616:	66 0f ef d2          	pxor   xmm2,xmm2
+ 61a:	f3 44 0f 2a c3       	cvtsi2ss xmm8,ebx
+ 61f:	f3 0f 58 cf          	addss  xmm1,xmm7
+ 623:	46 0f b6 5c b5 00    	movzx  r11d,BYTE PTR [rbp+r14*4+0x0]
+ 629:	f3 41 0f 58 c8       	addss  xmm1,xmm8
+ 62e:	f3 45 0f 2a cb       	cvtsi2ss xmm9,r11d
+ 633:	46 0f b6 7c b5 04    	movzx  r15d,BYTE PTR [rbp+r14*4+0x4]
+ 639:	f3 41 0f 58 c9       	addss  xmm1,xmm9
+ 63e:	f3 45 0f 2a d7       	cvtsi2ss xmm10,r15d
+ 643:	42 0f b6 6c b5 08    	movzx  ebp,BYTE PTR [rbp+r14*4+0x8]
+ 649:	f3 41 0f 58 ca       	addss  xmm1,xmm10
+ 64e:	f3 44 0f 2a dd       	cvtsi2ss xmm11,ebp
+ 653:	43 0f b6 4c b4 f8    	movzx  ecx,BYTE PTR [r12+r14*4-0x8]
+ 659:	f3 41 0f 58 cb       	addss  xmm1,xmm11
+ 65e:	f3 44 0f 2a e1       	cvtsi2ss xmm12,ecx
+ 663:	43 0f b6 5c b4 fc    	movzx  ebx,BYTE PTR [r12+r14*4-0x4]
+ 669:	f3 41 0f 58 cc       	addss  xmm1,xmm12
+ 66e:	f3 44 0f 2a eb       	cvtsi2ss xmm13,ebx
+ 673:	43 0f b6 2c b4       	movzx  ebp,BYTE PTR [r12+r14*4]
+ 678:	f3 41 0f 58 cd       	addss  xmm1,xmm13
+ 67d:	f3 44 0f 2a f5       	cvtsi2ss xmm14,ebp
+ 682:	47 0f b6 5c b4 04    	movzx  r11d,BYTE PTR [r12+r14*4+0x4]
+ 688:	f3 41 0f 58 ce       	addss  xmm1,xmm14
+ 68d:	f3 45 0f 2a fb       	cvtsi2ss xmm15,r11d
+ 692:	47 0f b6 64 b4 08    	movzx  r12d,BYTE PTR [r12+r14*4+0x8]
+ 698:	f3 41 0f 58 cf       	addss  xmm1,xmm15
+ 69d:	f3 41 0f 2a d4       	cvtsi2ss xmm2,r12d
+ 6a2:	f3 0f 10 3d 00 00 00 	movss  xmm7,DWORD PTR [rip+0x0]        # 6aa <ldr_c+0x6aa>
+ 6a9:	00 
+ 6aa:	f3 0f 58 ca          	addss  xmm1,xmm2
+ 6ae:	66 0f ef d2          	pxor   xmm2,xmm2
+ 6b2:	f3 0f 58 d9          	addss  xmm3,xmm1
+ 6b6:	f3 0f 59 e3          	mulss  xmm4,xmm3
+ 6ba:	0f 28 dc             	movaps xmm3,xmm4
+ 6bd:	f3 0f 59 dd          	mulss  xmm3,xmm5
+ 6c1:	f3 0f 10 0d 00 00 00 	movss  xmm1,DWORD PTR [rip+0x0]        # 6c9 <ldr_c+0x6c9>
+ 6c8:	00 
+ 6c9:	f3 0f 5e d9          	divss  xmm3,xmm1
+ 6cd:	f3 0f 58 dd          	addss  xmm3,xmm5
+ 6d1:	0f 28 ec             	movaps xmm5,xmm4
+ 6d4:	f3 0f 59 ee          	mulss  xmm5,xmm6
+ 6d8:	f3 0f 59 e0          	mulss  xmm4,xmm0
+ 6dc:	f3 0f 5f da          	maxss  xmm3,xmm2
+ 6e0:	f3 0f 5e e9          	divss  xmm5,xmm1
+ 6e4:	f3 0f 5e e1          	divss  xmm4,xmm1
+ 6e8:	f3 0f 58 ee          	addss  xmm5,xmm6
+ 6ec:	f3 0f 58 e0          	addss  xmm4,xmm0
+ 6f0:	f3 0f 5d df          	minss  xmm3,xmm7
+ 6f4:	f3 0f 5f ea          	maxss  xmm5,xmm2
+ 6f8:	f3 0f 5f e2          	maxss  xmm4,xmm2
+ 6fc:	f3 0f 2c cb          	cvttss2si ecx,xmm3
+ 700:	f3 0f 5d ef          	minss  xmm5,xmm7
+ 704:	f3 0f 5d e7          	minss  xmm4,xmm7
+ 708:	f3 0f 2c dd          	cvttss2si ebx,xmm5
+ 70c:	f3 0f 2c ec          	cvttss2si ebp,xmm4
+ 710:	43 88 4c b5 02       	mov    BYTE PTR [r13+r14*4+0x2],cl
+ 715:	43 88 5c b5 01       	mov    BYTE PTR [r13+r14*4+0x1],bl
+ 71a:	43 88 6c b5 00       	mov    BYTE PTR [r13+r14*4+0x0],bpl
+ 71f:	0f 83 90 00 00 00    	jae    7b5 <ldr_c+0x7b5>
+ 725:	e9 18 f9 ff ff       	jmp    42 <ldr_c+0x42>
+ 72a:	ff c0                	inc    eax
+ 72c:	3b c2                	cmp    eax,edx
+ 72e:	0f 83 c0 00 00 00    	jae    7f4 <ldr_c+0x7f4>
+ 734:	e9 09 f9 ff ff       	jmp    42 <ldr_c+0x42>
+ 739:	ff c0                	inc    eax
+ 73b:	3b c2                	cmp    eax,edx
+ 73d:	73 5e                	jae    79d <ldr_c+0x79d>
+ 73f:	e9 fe f8 ff ff       	jmp    42 <ldr_c+0x42>
+ 744:	ff c0                	inc    eax
+ 746:	3b c2                	cmp    eax,edx
+ 748:	73 5f                	jae    7a9 <ldr_c+0x7a9>
+ 74a:	e9 f3 f8 ff ff       	jmp    42 <ldr_c+0x42>
+ 74f:	ff c0                	inc    eax
+ 751:	3b c2                	cmp    eax,edx
+ 753:	0f 82 e9 f8 ff ff    	jb     42 <ldr_c+0x42>
+ 759:	41 ff c2             	inc    r10d
+ 75c:	44 3b 54 24 f8       	cmp    r10d,DWORD PTR [rsp-0x8]
+ 761:	7d 1b                	jge    77e <ldr_c+0x77e>
+ 763:	8b 4c 24 f8          	mov    ecx,DWORD PTR [rsp-0x8]
+ 767:	33 c0                	xor    eax,eax
+ 769:	85 d2                	test   edx,edx
+ 76b:	7e 09                	jle    776 <ldr_c+0x776>
+ 76d:	89 4c 24 f8          	mov    DWORD PTR [rsp-0x8],ecx
+ 771:	e9 cc f8 ff ff       	jmp    42 <ldr_c+0x42>
+ 776:	41 ff c2             	inc    r10d
+ 779:	44 3b d1             	cmp    r10d,ecx
+ 77c:	7c e9                	jl     767 <ldr_c+0x767>
+ 77e:	4c 8b 64 24 f0       	mov    r12,QWORD PTR [rsp-0x10]
+ 783:	4c 8b 6c 24 e8       	mov    r13,QWORD PTR [rsp-0x18]
+ 788:	4c 8b 74 24 e0       	mov    r14,QWORD PTR [rsp-0x20]
+ 78d:	4c 8b 7c 24 d8       	mov    r15,QWORD PTR [rsp-0x28]
+ 792:	48 8b 5c 24 d0       	mov    rbx,QWORD PTR [rsp-0x30]
+ 797:	48 8b 6c 24 c8       	mov    rbp,QWORD PTR [rsp-0x38]
+ 79c:	c3                   	ret    
+ 79d:	41 ff c2             	inc    r10d
+ 7a0:	44 3b 54 24 f8       	cmp    r10d,DWORD PTR [rsp-0x8]
+ 7a5:	7c bc                	jl     763 <ldr_c+0x763>
+ 7a7:	eb d5                	jmp    77e <ldr_c+0x77e>
+ 7a9:	41 ff c2             	inc    r10d
+ 7ac:	44 3b 54 24 f8       	cmp    r10d,DWORD PTR [rsp-0x8]
+ 7b1:	7c b0                	jl     763 <ldr_c+0x763>
+ 7b3:	eb c9                	jmp    77e <ldr_c+0x77e>
+ 7b5:	41 ff c2             	inc    r10d
+ 7b8:	44 3b 54 24 f8       	cmp    r10d,DWORD PTR [rsp-0x8]
+ 7bd:	7c a4                	jl     763 <ldr_c+0x763>
+ 7bf:	eb bd                	jmp    77e <ldr_c+0x77e>
+ 7c1:	41 ba 01 00 00 00    	mov    r10d,0x1
+ 7c7:	83 f9 01             	cmp    ecx,0x1
+ 7ca:	7e d0                	jle    79c <ldr_c+0x79c>
+ 7cc:	85 d2                	test   edx,edx
+ 7ce:	0f 8f 4c f8 ff ff    	jg     20 <ldr_c+0x20>
+ 7d4:	4c 89 64 24 f0       	mov    QWORD PTR [rsp-0x10],r12
+ 7d9:	4c 89 6c 24 e8       	mov    QWORD PTR [rsp-0x18],r13
+ 7de:	4c 89 74 24 e0       	mov    QWORD PTR [rsp-0x20],r14
+ 7e3:	4c 89 7c 24 d8       	mov    QWORD PTR [rsp-0x28],r15
+ 7e8:	48 89 5c 24 d0       	mov    QWORD PTR [rsp-0x30],rbx
+ 7ed:	48 89 6c 24 c8       	mov    QWORD PTR [rsp-0x38],rbp
+ 7f2:	eb 82                	jmp    776 <ldr_c+0x776>
+ 7f4:	41 ff c2             	inc    r10d
+ 7f7:	44 3b 54 24 f8       	cmp    r10d,DWORD PTR [rsp-0x8]
+ 7fc:	0f 8c 61 ff ff ff    	jl     763 <ldr_c+0x763>
+ 802:	e9 77 ff ff ff       	jmp    77e <ldr_c+0x77e>
+ 807:	66 0f 1f 84 00 00 00 	nop    WORD PTR [rax+rax*1+0x0]
+ 80e:	00 00 

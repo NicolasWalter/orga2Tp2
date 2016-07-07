@@ -1,0 +1,33 @@
+ICC VERSION: 16.0.2
+GCC VERSION: 4.8.4
+
+Observando las mediciones obtenidas tras correr los filtros con la optimización O0 podemos ver que los resultados correspondientes a icc son iguales tanto al compilar con el parámetro xhost o sin él, lo cual nos llevó a ver el código que generaba y notar que es exactamente igual; a diferencia de esto, gcc generó mediciones diferentes en el caso de sepia y luego notamos que utiliza instrucciones diferentes al compilar con "-O0" que al compilar con "-O0 -march=native" (excepto en cropflip), lo cual generó una notable variación en la cantidad de ticks de reloj que ocupó sepia, si bien en ldr no fue notable a pesar de utilizar otras instrucciones. Otra observación realizada fue que en ninguno de estos casos se utilizaban los registros ymm.
+
+Pudimos ver que no hay diferencias entre la cantidad de ticks de reloj que tomaban los filtros compilados con O2 y los filtros compilados con O3 con el mismo compilador (utilizando o no xhost o march=native en cada caso) a pesar de que utilizan instrucciones diferentes. En particular, al compilar el filtro cropflip con GCC con los parámetros "-O3" o "-O3 -march=native" difirió el código ensamblado y resultó mucho más performante el generado por las opciones recién mencionadas ya que aprovechan los registros ymm, los cuales no fueron utilizados en ningun otro ensamblado, algo sorprendente ya que pensabamos que icc iba a aprovechar la disponibilidad de los mismos.
+
+En general, ignorando el caso en el que gcc aprovecha los registros ymm para cropflip (utilizando "-O3" o "-O3 -march=native"), podemos ver que icc genera codigo asm mas performante.
+
+Aunque resulte extraño que siendo cropflip un filtro tan simple que s ́olo realiza accesos a
+memoria, ICC utilizando xhost O3 y GCC utilizando march=native O3 generan mediciones
+muy diferentes, a tal punto que al ensamblado por ICC le toma alrededor de ocho veces
+mas cantidad de ciclos que al ensamblado por GCC.
+
+Para el caso de sepia, podemos observar que ICC O0 tanto con o sin el par ́ametro xhost
+se queda atr ́
+as como en el resto de los filtros. Tambi ́en se puede notar que se diferencian
+GCC O0 y GCC O0 con march=native, lo cual no esperabamos que sucediera debido a
+que O0 indica que no se realicen optimizaciones. Por u
+ ́ ltimo, en este filtro podemos notar
+que GCC e ICC se asemejan al optimizar operaciones que solo realizan accesos a memoria
+y multiplican floats, si bien ICC logre una mejor performance.
+
+En el caso de low dynamic range podemos observar una diferencia m ́as marcada entre ICC
+y GCC al ver que a GCC le toma dos veces la cantidad de ciclos de clock que le toma
+a ICC aplicar el filtro. En este caso podr ́ıamos concluir que ICC logra optimizar de una
+manera diferente a GCC el c ́
+alculo que debe realizar el filtro con los vecinos de cada pixel
+y as ́ı lograr una gran diferencia de performance.
+
+Los resultados que nos brindaron estas mediciones nos llevan a refutar nuestra hip ́otesis, pero
+podemos ver que no siempre un compilador es mejor que el otro, sino que los resultados dependen
+de que tipo de operaciones deba optimizar.

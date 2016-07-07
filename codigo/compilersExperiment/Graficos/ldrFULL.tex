@@ -1,0 +1,70 @@
+% This file was created by matplotlib2tikz v0.5.7.
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
+\begin{tikzpicture}
+
+\begin{axis}[
+title={LOW DYNAMIC RANGE},
+xlabel={Cantidad de pixeles de la imagen},
+ylabel={Cantidad de ciclos de Clock},
+xmin=16384, xmax=4194304,
+ymin=2097152, ymax=2147483648,
+xmode=log,
+ymode=log,
+axis on top,
+legend style={at={(0.03,0.97)}, anchor=north west},
+legend entries={{ICCxHostO3},{GCCO2},{GCCO0}},
+legend cell align={left}
+]
+\addplot [thick, red]
+table {%
+16384 2280118.5
+65536 9599396
+147456 21767360
+262144 41400424
+409600 60736852
+589824 87490816
+802816 123732832
+1048576 168813344
+1327104 197484528
+1638400 243986080
+1982464 297028448
+2359296 367408512
+};
+\addplot [thick, green!50.0!black]
+table {%
+16384 4102542.25
+65536 16935214
+147456 38963324
+262144 77944272
+409600 107525768
+589824 155570448
+802816 211782256
+1048576 313218144
+1327104 358000960
+1638400 431801792
+1982464 522870784
+2359296 706213568
+};
+\addplot [thick, blue]
+table {%
+16384 8032979
+65536 33715716
+147456 74180728
+262144 137733632
+409600 216699472
+589824 300211040
+802816 407883680
+1048576 534773504
+1327104 679583616
+1638400 841191360
+1982464 1012939136
+2359296 1216304256
+};
+\end{axis}
+
+\end{tikzpicture}

@@ -1,0 +1,64 @@
+
+cropflip_c.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <cropflip_c>:
+   0:	45 89 c2             	mov    r10d,r8d
+   3:	4d 63 d2             	movsxd r10,r10d
+   6:	49 89 f0             	mov    r8,rsi
+   9:	4c 89 d1             	mov    rcx,r10
+   c:	33 d2                	xor    edx,edx
+   e:	48 63 74 24 10       	movsxd rsi,DWORD PTR [rsp+0x10]
+  13:	48 f7 d9             	neg    rcx
+  16:	4d 63 c9             	movsxd r9,r9d
+  19:	48 85 f6             	test   rsi,rsi
+  1c:	0f 8e 93 00 00 00    	jle    b5 <cropflip_c+0xb5>
+  22:	48 63 44 24 20       	movsxd rax,DWORD PTR [rsp+0x20]
+  27:	44 8b 5c 24 18       	mov    r11d,DWORD PTR [rsp+0x18]
+  2c:	4c 89 7c 24 e8       	mov    QWORD PTR [rsp-0x18],r15
+  31:	48 89 5c 24 f0       	mov    QWORD PTR [rsp-0x10],rbx
+  36:	48 8d 44 30 ff       	lea    rax,[rax+rsi*1-0x1]
+  3b:	49 0f af c2          	imul   rax,r10
+  3f:	48 03 c7             	add    rax,rdi
+  42:	42 8d 3c 9d 00 00 00 	lea    edi,[r11*4+0x0]
+  49:	00 
+  4a:	48 63 ff             	movsxd rdi,edi
+  4d:	44 8b 54 24 08       	mov    r10d,DWORD PTR [rsp+0x8]
+  52:	48 89 6c 24 f8       	mov    QWORD PTR [rsp-0x8],rbp
+  57:	33 ed                	xor    ebp,ebp
+  59:	45 33 db             	xor    r11d,r11d
+  5c:	48 89 fb             	mov    rbx,rdi
+  5f:	45 85 d2             	test   r10d,r10d
+  62:	7e 52                	jle    b6 <cropflip_c+0xb6>
+  64:	ff c5                	inc    ebp
+  66:	44 8a 3c 03          	mov    r15b,BYTE PTR [rbx+rax*1]
+  6a:	47 88 3c 98          	mov    BYTE PTR [r8+r11*4],r15b
+  6e:	44 8a 7c 03 01       	mov    r15b,BYTE PTR [rbx+rax*1+0x1]
+  73:	47 88 7c 98 01       	mov    BYTE PTR [r8+r11*4+0x1],r15b
+  78:	44 8a 7c 03 02       	mov    r15b,BYTE PTR [rbx+rax*1+0x2]
+  7d:	47 88 7c 98 02       	mov    BYTE PTR [r8+r11*4+0x2],r15b
+  82:	44 8a 7c 03 03       	mov    r15b,BYTE PTR [rbx+rax*1+0x3]
+  87:	48 83 c3 04          	add    rbx,0x4
+  8b:	47 88 7c 98 03       	mov    BYTE PTR [r8+r11*4+0x3],r15b
+  90:	49 ff c3             	inc    r11
+  93:	41 3b ea             	cmp    ebp,r10d
+  96:	72 cc                	jb     64 <cropflip_c+0x64>
+  98:	48 ff c2             	inc    rdx
+  9b:	4d 03 c1             	add    r8,r9
+  9e:	48 03 c1             	add    rax,rcx
+  a1:	48 3b d6             	cmp    rdx,rsi
+  a4:	72 b1                	jb     57 <cropflip_c+0x57>
+  a6:	4c 8b 7c 24 e8       	mov    r15,QWORD PTR [rsp-0x18]
+  ab:	48 8b 5c 24 f0       	mov    rbx,QWORD PTR [rsp-0x10]
+  b0:	48 8b 6c 24 f8       	mov    rbp,QWORD PTR [rsp-0x8]
+  b5:	c3                   	ret    
+  b6:	48 ff c2             	inc    rdx
+  b9:	4d 03 c1             	add    r8,r9
+  bc:	48 03 c1             	add    rax,rcx
+  bf:	48 3b d6             	cmp    rdx,rsi
+  c2:	72 93                	jb     57 <cropflip_c+0x57>
+  c4:	eb e0                	jmp    a6 <cropflip_c+0xa6>
+  c6:	0f 1f 00             	nop    DWORD PTR [rax]
+  c9:	0f 1f 80 00 00 00 00 	nop    DWORD PTR [rax+0x0]

@@ -1,0 +1,106 @@
+
+cropflip_c.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <cropflip_c>:
+   0:	55                   	push   rbp
+   1:	48 89 e5             	mov    rbp,rsp
+   4:	41 55                	push   r13
+   6:	41 54                	push   r12
+   8:	48 89 7d a8          	mov    QWORD PTR [rbp-0x58],rdi
+   c:	48 89 75 a0          	mov    QWORD PTR [rbp-0x60],rsi
+  10:	89 55 9c             	mov    DWORD PTR [rbp-0x64],edx
+  13:	89 4d 98             	mov    DWORD PTR [rbp-0x68],ecx
+  16:	44 89 45 94          	mov    DWORD PTR [rbp-0x6c],r8d
+  1a:	44 89 4d 90          	mov    DWORD PTR [rbp-0x70],r9d
+  1e:	8b 45 94             	mov    eax,DWORD PTR [rbp-0x6c]
+  21:	48 63 d0             	movsxd rdx,eax
+  24:	48 83 ea 01          	sub    rdx,0x1
+  28:	48 89 55 b8          	mov    QWORD PTR [rbp-0x48],rdx
+  2c:	48 63 d0             	movsxd rdx,eax
+  2f:	49 89 d4             	mov    r12,rdx
+  32:	41 bd 00 00 00 00    	mov    r13d,0x0
+  38:	48 8b 55 a8          	mov    rdx,QWORD PTR [rbp-0x58]
+  3c:	48 89 55 c0          	mov    QWORD PTR [rbp-0x40],rdx
+  40:	8b 55 90             	mov    edx,DWORD PTR [rbp-0x70]
+  43:	48 63 ca             	movsxd rcx,edx
+  46:	48 83 e9 01          	sub    rcx,0x1
+  4a:	48 89 4d c8          	mov    QWORD PTR [rbp-0x38],rcx
+  4e:	48 63 ca             	movsxd rcx,edx
+  51:	49 89 ca             	mov    r10,rcx
+  54:	41 bb 00 00 00 00    	mov    r11d,0x0
+  5a:	48 8b 4d a0          	mov    rcx,QWORD PTR [rbp-0x60]
+  5e:	48 89 4d d0          	mov    QWORD PTR [rbp-0x30],rcx
+  62:	c7 45 b0 00 00 00 00 	mov    DWORD PTR [rbp-0x50],0x0
+  69:	e9 db 00 00 00       	jmp    149 <cropflip_c+0x149>
+  6e:	c7 45 b4 00 00 00 00 	mov    DWORD PTR [rbp-0x4c],0x0
+  75:	e9 bf 00 00 00       	jmp    139 <cropflip_c+0x139>
+  7a:	8b 4d b0             	mov    ecx,DWORD PTR [rbp-0x50]
+  7d:	48 63 f1             	movsxd rsi,ecx
+  80:	48 63 ca             	movsxd rcx,edx
+  83:	48 0f af f1          	imul   rsi,rcx
+  87:	48 8b 4d d0          	mov    rcx,QWORD PTR [rbp-0x30]
+  8b:	48 01 ce             	add    rsi,rcx
+  8e:	8b 4d b4             	mov    ecx,DWORD PTR [rbp-0x4c]
+  91:	c1 e1 02             	shl    ecx,0x2
+  94:	48 63 c9             	movsxd rcx,ecx
+  97:	48 01 f1             	add    rcx,rsi
+  9a:	48 89 4d d8          	mov    QWORD PTR [rbp-0x28],rcx
+  9e:	8b 4d b0             	mov    ecx,DWORD PTR [rbp-0x50]
+  a1:	48 63 f1             	movsxd rsi,ecx
+  a4:	48 63 c8             	movsxd rcx,eax
+  a7:	48 0f af f1          	imul   rsi,rcx
+  ab:	48 8b 4d c0          	mov    rcx,QWORD PTR [rbp-0x40]
+  af:	48 01 ce             	add    rsi,rcx
+  b2:	8b 4d b4             	mov    ecx,DWORD PTR [rbp-0x4c]
+  b5:	c1 e1 02             	shl    ecx,0x2
+  b8:	48 63 c9             	movsxd rcx,ecx
+  bb:	48 01 f1             	add    rcx,rsi
+  be:	48 89 4d e0          	mov    QWORD PTR [rbp-0x20],rcx
+  c2:	8b 4d 28             	mov    ecx,DWORD PTR [rbp+0x28]
+  c5:	8b 75 18             	mov    esi,DWORD PTR [rbp+0x18]
+  c8:	01 f1                	add    ecx,esi
+  ca:	2b 4d b0             	sub    ecx,DWORD PTR [rbp-0x50]
+  cd:	83 e9 01             	sub    ecx,0x1
+  d0:	48 63 f1             	movsxd rsi,ecx
+  d3:	48 63 c8             	movsxd rcx,eax
+  d6:	48 0f af f1          	imul   rsi,rcx
+  da:	48 8b 4d c0          	mov    rcx,QWORD PTR [rbp-0x40]
+  de:	48 8d 3c 0e          	lea    rdi,[rsi+rcx*1]
+  e2:	8b 4d b4             	mov    ecx,DWORD PTR [rbp-0x4c]
+  e5:	8b 75 20             	mov    esi,DWORD PTR [rbp+0x20]
+  e8:	01 f1                	add    ecx,esi
+  ea:	c1 e1 02             	shl    ecx,0x2
+  ed:	48 63 c9             	movsxd rcx,ecx
+  f0:	48 01 f9             	add    rcx,rdi
+  f3:	48 89 4d e8          	mov    QWORD PTR [rbp-0x18],rcx
+  f7:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
+  fb:	0f b6 31             	movzx  esi,BYTE PTR [rcx]
+  fe:	48 8b 4d d8          	mov    rcx,QWORD PTR [rbp-0x28]
+ 102:	40 88 31             	mov    BYTE PTR [rcx],sil
+ 105:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
+ 109:	0f b6 71 01          	movzx  esi,BYTE PTR [rcx+0x1]
+ 10d:	48 8b 4d d8          	mov    rcx,QWORD PTR [rbp-0x28]
+ 111:	40 88 71 01          	mov    BYTE PTR [rcx+0x1],sil
+ 115:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
+ 119:	0f b6 71 02          	movzx  esi,BYTE PTR [rcx+0x2]
+ 11d:	48 8b 4d d8          	mov    rcx,QWORD PTR [rbp-0x28]
+ 121:	40 88 71 02          	mov    BYTE PTR [rcx+0x2],sil
+ 125:	48 8b 4d e8          	mov    rcx,QWORD PTR [rbp-0x18]
+ 129:	0f b6 71 03          	movzx  esi,BYTE PTR [rcx+0x3]
+ 12d:	48 8b 4d d8          	mov    rcx,QWORD PTR [rbp-0x28]
+ 131:	40 88 71 03          	mov    BYTE PTR [rcx+0x3],sil
+ 135:	83 45 b4 01          	add    DWORD PTR [rbp-0x4c],0x1
+ 139:	8b 4d b4             	mov    ecx,DWORD PTR [rbp-0x4c]
+ 13c:	3b 4d 10             	cmp    ecx,DWORD PTR [rbp+0x10]
+ 13f:	0f 8c 35 ff ff ff    	jl     7a <cropflip_c+0x7a>
+ 145:	83 45 b0 01          	add    DWORD PTR [rbp-0x50],0x1
+ 149:	8b 4d b0             	mov    ecx,DWORD PTR [rbp-0x50]
+ 14c:	3b 4d 18             	cmp    ecx,DWORD PTR [rbp+0x18]
+ 14f:	0f 8c 19 ff ff ff    	jl     6e <cropflip_c+0x6e>
+ 155:	41 5c                	pop    r12
+ 157:	41 5d                	pop    r13
+ 159:	5d                   	pop    rbp
+ 15a:	c3                   	ret    

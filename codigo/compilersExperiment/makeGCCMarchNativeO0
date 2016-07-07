@@ -1,0 +1,54 @@
+CC_OPTIMIZATION = -O0 -march=native
+BUILD_DIR = GCCMarchNativeO0
+
+BIN = tp2
+
+CC = gcc
+
+CFLAGS = -ggdb -std=c99 -pedantic -m64 -w -DEXPERIMENTO $(CC_OPTIMIZATION)
+
+CFLAGS64 = -Wall -Wextra
+
+FILTROS = cropflip sepia ldr
+
+
+UNAME_S := $(shell uname -s)
+ifeq ($(UNAME_S),Linux)
+	ASMFLAGS64 = -felf64 -g -F dwarf
+endif
+ifeq ($(UNAME_S),Darwin)
+	ASMFLAGS64 = -fmacho64 -g -DDARWIN
+endif
+
+ASMFLAGS = $(ASMFLAGS64)
+
+ASM = nasm
+
+BMPDIFF     =	 $(BUILD_DIR)/bmpdiff
+FILTROS_OBJ = $(addsuffix .o, $(FILTROS)) $(addsuffix _asm.o, $(FILTROS)) $(addsuffix _c.o, $(FILTROS))
+LIBS_OBJS   = libbmp.o imagenes.o
+MAIN_OBJS   = tp2.o cli.o
+
+
+OBJS = $(MAIN_OBJS) $(LIBS_OBJS) $(FILTROS_OBJ)
+
+OBJS_CON_PATH = $(addprefix $(BUILD_DIR)/, $(OBJS))
+
+.PHONY: clean
+
+all: $(BUILD_DIR)/$(BIN) $(BUILD_DIR)/bmpdiff
+
+$(BUILD_DIR)/bmpdiff: bmpdiff.c $(LIBS_OBJS)
+	$(CC) $(CFLAGS) bmpdiff.c $(LIBS_OBJS) -o $(BMPDIFF)
+
+$(BUILD_DIR)/$(BIN): $(OBJS_CON_PATH)
+	$(CC) $(CFLAGS) $(OBJS_CON_PATH) -o $@ -lm 
+
+$(BUILD_DIR)/%.o: %.c
+	$(CC) $(CFLAGS) -c -o $@ $< -lm
+
+$(BUILD_DIR)/%.o: %.asm
+	$(ASM) $(ASMFLAGS) -o $@ $<
+
+clean:
+	rm -fr $(BUILD_DIR)/*

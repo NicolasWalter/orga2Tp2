@@ -1,0 +1,86 @@
+
+sepia_c.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <sepia_c>:
+   0:	85 c9                	test   ecx,ecx
+   2:	0f 8e 03 01 00 00    	jle    10b <sepia_c+0x10b>
+   8:	41 55                	push   r13
+   a:	8d 42 ff             	lea    eax,[rdx-0x1]
+   d:	f2 0f 10 35 00 00 00 	movsd  xmm6,QWORD PTR [rip+0x0]        # 15 <sepia_c+0x15>
+  14:	00 
+  15:	41 54                	push   r12
+  17:	4c 8d 2c 85 04 00 00 	lea    r13,[rax*4+0x4]
+  1e:	00 
+  1f:	4d 63 e0             	movsxd r12,r8d
+  22:	f2 0f 10 2d 00 00 00 	movsd  xmm5,QWORD PTR [rip+0x0]        # 2a <sepia_c+0x2a>
+  29:	00 
+  2a:	55                   	push   rbp
+  2b:	f2 0f 10 25 00 00 00 	movsd  xmm4,QWORD PTR [rip+0x0]        # 33 <sepia_c+0x33>
+  32:	00 
+  33:	f2 0f 10 0d 00 00 00 	movsd  xmm1,QWORD PTR [rip+0x0]        # 3b <sepia_c+0x3b>
+  3a:	00 
+  3b:	49 63 e9             	movsxd rbp,r9d
+  3e:	53                   	push   rbx
+  3f:	48 89 f3             	mov    rbx,rsi
+  42:	31 f6                	xor    esi,esi
+  44:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  48:	85 d2                	test   edx,edx
+  4a:	0f 8e a4 00 00 00    	jle    f4 <sepia_c+0xf4>
+  50:	4d 8d 5c 3d 00       	lea    r11,[r13+rdi*1+0x0]
+  55:	49 89 d8             	mov    r8,rbx
+  58:	48 89 f8             	mov    rax,rdi
+  5b:	eb 2a                	jmp    87 <sepia_c+0x87>
+  5d:	0f 1f 00             	nop    DWORD PTR [rax]
+  60:	66 0f 2e d1          	ucomisd xmm2,xmm1
+  64:	41 c6 40 02 ff       	mov    BYTE PTR [r8+0x2],0xff
+  69:	76 64                	jbe    cf <sepia_c+0xcf>
+  6b:	66 0f 2e c1          	ucomisd xmm0,xmm1
+  6f:	41 c6 40 01 ff       	mov    BYTE PTR [r8+0x1],0xff
+  74:	76 68                	jbe    de <sepia_c+0xde>
+  76:	48 83 c0 04          	add    rax,0x4
+  7a:	41 c6 00 ff          	mov    BYTE PTR [r8],0xff
+  7e:	49 83 c0 04          	add    r8,0x4
+  82:	4c 39 d8             	cmp    rax,r11
+  85:	74 6d                	je     f4 <sepia_c+0xf4>
+  87:	44 8b 08             	mov    r9d,DWORD PTR [rax]
+  8a:	45 89 08             	mov    DWORD PTR [r8],r9d
+  8d:	44 0f b6 50 01       	movzx  r10d,BYTE PTR [rax+0x1]
+  92:	44 0f b6 08          	movzx  r9d,BYTE PTR [rax]
+  96:	45 01 d1             	add    r9d,r10d
+  99:	44 0f b6 50 02       	movzx  r10d,BYTE PTR [rax+0x2]
+  9e:	45 01 d1             	add    r9d,r10d
+  a1:	f2 41 0f 2a c1       	cvtsi2sd xmm0,r9d
+  a6:	66 0f 28 d8          	movapd xmm3,xmm0
+  aa:	66 0f 28 d0          	movapd xmm2,xmm0
+  ae:	f2 0f 59 c4          	mulsd  xmm0,xmm4
+  b2:	f2 0f 59 de          	mulsd  xmm3,xmm6
+  b6:	f2 0f 59 d5          	mulsd  xmm2,xmm5
+  ba:	66 0f 2e d9          	ucomisd xmm3,xmm1
+  be:	77 a0                	ja     60 <sepia_c+0x60>
+  c0:	f2 44 0f 2c cb       	cvttsd2si r9d,xmm3
+  c5:	66 0f 2e d1          	ucomisd xmm2,xmm1
+  c9:	45 88 48 02          	mov    BYTE PTR [r8+0x2],r9b
+  cd:	77 9c                	ja     6b <sepia_c+0x6b>
+  cf:	f2 44 0f 2c ca       	cvttsd2si r9d,xmm2
+  d4:	66 0f 2e c1          	ucomisd xmm0,xmm1
+  d8:	45 88 48 01          	mov    BYTE PTR [r8+0x1],r9b
+  dc:	77 98                	ja     76 <sepia_c+0x76>
+  de:	f2 44 0f 2c c8       	cvttsd2si r9d,xmm0
+  e3:	48 83 c0 04          	add    rax,0x4
+  e7:	49 83 c0 04          	add    r8,0x4
+  eb:	45 88 48 fc          	mov    BYTE PTR [r8-0x4],r9b
+  ef:	4c 39 d8             	cmp    rax,r11
+  f2:	75 93                	jne    87 <sepia_c+0x87>
+  f4:	83 c6 01             	add    esi,0x1
+  f7:	4c 01 e7             	add    rdi,r12
+  fa:	48 01 eb             	add    rbx,rbp
+  fd:	39 ce                	cmp    esi,ecx
+  ff:	0f 85 43 ff ff ff    	jne    48 <sepia_c+0x48>
+ 105:	5b                   	pop    rbx
+ 106:	5d                   	pop    rbp
+ 107:	41 5c                	pop    r12
+ 109:	41 5d                	pop    r13
+ 10b:	f3 c3                	repz ret 

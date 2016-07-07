@@ -1,0 +1,58 @@
+
+cropflip_c.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <cropflip_c>:
+   0:	41 54                	push   r12
+   2:	55                   	push   rbp
+   3:	53                   	push   rbx
+   4:	44 8b 5c 24 28       	mov    r11d,DWORD PTR [rsp+0x28]
+   9:	8b 5c 24 20          	mov    ebx,DWORD PTR [rsp+0x20]
+   d:	45 85 db             	test   r11d,r11d
+  10:	0f 8e 81 00 00 00    	jle    97 <cropflip_c+0x97>
+  16:	44 8b 54 24 38       	mov    r10d,DWORD PTR [rsp+0x38]
+  1b:	49 63 e8             	movsxd rbp,r8d
+  1e:	4d 63 c9             	movsxd r9,r9d
+  21:	8b 44 24 30          	mov    eax,DWORD PTR [rsp+0x30]
+  25:	45 31 c0             	xor    r8d,r8d
+  28:	45 01 da             	add    r10d,r11d
+  2b:	4d 63 d2             	movsxd r10,r10d
+  2e:	c1 e0 02             	shl    eax,0x2
+  31:	49 83 ea 01          	sub    r10,0x1
+  35:	48 98                	cdqe   
+  37:	4c 0f af d5          	imul   r10,rbp
+  3b:	49 01 c2             	add    r10,rax
+  3e:	8d 43 ff             	lea    eax,[rbx-0x1]
+  41:	49 01 fa             	add    r10,rdi
+  44:	4c 8d 24 85 04 00 00 	lea    r12,[rax*4+0x4]
+  4b:	00 
+  4c:	0f 1f 40 00          	nop    DWORD PTR [rax+0x0]
+  50:	85 db                	test   ebx,ebx
+  52:	7e 34                	jle    88 <cropflip_c+0x88>
+  54:	49 8d 3c 34          	lea    rdi,[r12+rsi*1]
+  58:	48 89 f0             	mov    rax,rsi
+  5b:	4c 89 d2             	mov    rdx,r10
+  5e:	66 90                	xchg   ax,ax
+  60:	0f b6 0a             	movzx  ecx,BYTE PTR [rdx]
+  63:	48 83 c0 04          	add    rax,0x4
+  67:	48 83 c2 04          	add    rdx,0x4
+  6b:	88 48 fc             	mov    BYTE PTR [rax-0x4],cl
+  6e:	0f b6 4a fd          	movzx  ecx,BYTE PTR [rdx-0x3]
+  72:	88 48 fd             	mov    BYTE PTR [rax-0x3],cl
+  75:	0f b6 4a fe          	movzx  ecx,BYTE PTR [rdx-0x2]
+  79:	88 48 fe             	mov    BYTE PTR [rax-0x2],cl
+  7c:	0f b6 4a ff          	movzx  ecx,BYTE PTR [rdx-0x1]
+  80:	88 48 ff             	mov    BYTE PTR [rax-0x1],cl
+  83:	48 39 f8             	cmp    rax,rdi
+  86:	75 d8                	jne    60 <cropflip_c+0x60>
+  88:	41 83 c0 01          	add    r8d,0x1
+  8c:	49 29 ea             	sub    r10,rbp
+  8f:	4c 01 ce             	add    rsi,r9
+  92:	45 39 d8             	cmp    r8d,r11d
+  95:	75 b9                	jne    50 <cropflip_c+0x50>
+  97:	5b                   	pop    rbx
+  98:	5d                   	pop    rbp
+  99:	41 5c                	pop    r12
+  9b:	c3                   	ret    

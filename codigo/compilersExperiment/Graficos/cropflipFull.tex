@@ -1,0 +1,70 @@
+% This file was created by matplotlib2tikz v0.5.7.
+% The lastest updates can be retrieved from
+% 
+% https://github.com/nschloe/matplotlib2tikz
+% 
+% where you can also submit bug reports and leavecomments.
+% 
+\begin{tikzpicture}
+
+\begin{axis}[
+title={CROPFLIP},
+xlabel={Cantidad de pixeles de la imagen},
+ylabel={Cantidad de ciclos de Clock},
+xmin=16384, xmax=4194304,
+ymin=2048, ymax=16777216,
+xmode=log,
+ymode=log,
+axis on top,
+legend style={at={(0.03,0.97)}, anchor=north west},
+legend entries={{GCCO3},{ICCxHostO2},{GCCO0}},
+legend cell align={left}
+]
+\addplot [thick, red]
+table {%
+16384 2133.332
+65536 9279.17
+147456 28621.494
+262144 53298.07
+409600 84254.547
+589824 119057.805
+802816 163240.531
+1048576 275661.125
+1327104 348867.5
+1638400 477406.875
+1982464 757465.625
+2359296 1167610.125
+};
+\addplot [thick, green!50.0!black]
+table {%
+16384 17463.844
+65536 68736.227
+147456 152753.312
+262144 264387.656
+409600 417984.719
+589824 596625.125
+802816 822247.625
+1048576 1077634
+1327104 1417517.375
+1638400 1751845.5
+1982464 2180814.25
+2359296 2525897.5
+};
+\addplot [thick, blue]
+table {%
+16384 74355.594
+65536 295729.5
+147456 665697.562
+262144 1177812.875
+409600 1841759
+589824 2667882
+802816 3613689.75
+1048576 4792094
+1327104 6049229.5
+1638400 7505662
+1982464 9032533
+2359296 10776380
+};
+\end{axis}
+
+\end{tikzpicture}
